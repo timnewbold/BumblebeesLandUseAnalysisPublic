@@ -1,5 +1,7 @@
 suppressMessages(suppressWarnings(library(yarg)))
 
+dataDir <- "0_data"
+
 inDir <- "1_PrepareDiversityData/"
 
 outDir <- "2_PrepareSiteData/"
@@ -47,3 +49,27 @@ sites.div$UI<-factor(sites.div$UI)
 sites.div$UI<-relevel(sites.div$UI,ref="Natural Minimal use")
 
 save(sites.div,file=paste(outDir,"modelling_data.Rd",sep=""))
+
+sitesMap <- SpatialPointsDataFrame(coords = data.frame(x=sites.div$Longitude,y=sites.div$Latitude),
+                                 data = sites.div,
+                                 proj4string = CRS(
+                                   "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"))
+
+un_sub <- readOGR(dsn = dataDir,layer = "UN_subregion",verbose = FALSE)
+
+un_sub <- un_sub[(un_sub$SUBREGION %in% c(21,13,154,155,39)),]
+
+cols <- colorRampPalette(colors = c("#000000","#ffffff"))(5)
+
+png(filename = paste(outDir,"MapSites.png",sep=""),width = 17.5,height = 8,units = "cm",res = 1200)
+
+par(mar=c(0,0,0,0))
+
+plot(un_sub,col=cols,xlim=c(-180,30))
+
+plot(sitesMap,add=TRUE,pch=16,cex=0.5,col="#cc0000")
+
+invisible(dev.off())
+
+
+
