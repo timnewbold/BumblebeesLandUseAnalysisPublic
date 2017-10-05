@@ -40,4 +40,12 @@ model.sd <- ModelSelect(all.data = sites.div,responseVar = "LogSimpson",
                         optimizer = "bobyqa")
 
 saveRDS(object = model.sr,file = paste(outDir,"modelRichness.rds",sep=""))
+saveRDS(object = model.ta,file = paste(outDir,"modelAbundance.rds",sep=""))
 
+png(filename = paste(outDir,"IntensityEffectAbundance.png",sep=""),width = 12.5,height = 8,units = "cm",res = 1200)
+
+PlotErrBar(model = model.ta$model,data = model.ta$data,
+           responseVar = "Abundance",logLink = "e",
+           catEffects = "UseIntensity",forPaper = TRUE)
+
+invisible(dev.off())
