@@ -8,6 +8,8 @@ outDir <- "2_PrepareSiteData/"
 
 load(paste(inDir,"diversity_data.Rd",sep=""))
 
+# diversity$Measurement <- diversity$Measurement.rs
+
 sites.div<-SiteMetrics(diversity=diversity,
                        extra.cols=c("SSB","SSBS","Biome","Sampling_method",
                                     "Study_common_taxon","Sampling_effort",

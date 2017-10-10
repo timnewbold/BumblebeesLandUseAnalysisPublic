@@ -34,5 +34,11 @@ diversity <- CorrectSamplingEffort(diversity)
 cat('Merging sites\n')
 diversity <- MergeSites(diversity,public = TRUE,silent = TRUE)
 
+diversity <- do.call('rbind',lapply(X = split(diversity,diversity$SS),FUN = function(s){
+  s$Measurement.rs <- s$Measurement/max(s$Measurement)
+  
+  return(s)
+}))
+
 cat('Saving diversity data\n')
 save(diversity,file=paste(outDir,"diversity_data.Rd",sep=""))
