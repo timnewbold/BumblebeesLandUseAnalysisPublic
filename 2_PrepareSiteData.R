@@ -6,6 +6,8 @@ inDir <- "1_PrepareDiversityData/"
 
 outDir <- "2_PrepareSiteData/"
 
+cat('Preparing site data\n')
+
 load(paste(inDir,"diversity_data.Rd",sep=""))
 
 # diversity$Measurement <- diversity$Measurement.rs
@@ -30,9 +32,9 @@ sites.div$LandUse[which(sites.div$LandUse=="Mature secondary vegetation")]<-"Nat
 sites.div$LandUse[which(sites.div$LandUse=="Intermediate secondary vegetation")]<-"Natural"
 sites.div$LandUse[which(sites.div$LandUse=="Young secondary vegetation")]<-"Natural"
 sites.div$LandUse[which(sites.div$LandUse=="Secondary vegetation (indeterminate age)")]<-"Natural"
-sites.div$LandUse[which(sites.div$LandUse=="Cropland")]<-"Human"
-sites.div$LandUse[which(sites.div$LandUse=="Pasture")]<-"Human"
-sites.div$LandUse[which(sites.div$LandUse=="Urban")]<-"Human"
+# sites.div$LandUse[which(sites.div$LandUse=="Cropland")]<-"Human"
+# sites.div$LandUse[which(sites.div$LandUse=="Pasture")]<-"Human"
+# sites.div$LandUse[which(sites.div$LandUse=="Urban")]<-"Human"
 sites.div$LandUse[which(sites.div$LandUse=="Cannot decide")]<-NA
 sites.div$LandUse<-factor(sites.div$LandUse)
 sites.div$LandUse<-relevel(sites.div$LandUse,ref="Natural")
@@ -50,7 +52,26 @@ sites.div$UI[grep("NA",sites.div$UI)]<-NA
 sites.div$UI<-factor(sites.div$UI)
 sites.div$UI<-relevel(sites.div$UI,ref="Natural Minimal use")
 
+cat('Adding other explanatory variables\n')
+
+temp <- readGDAL(paste(dataDir,"/bio_1",sep=""),silent = TRUE)
+sites.div <- AddGridData(gridData = temp,dataFrame = sites.div,columnName = "temp",silent = TRUE)
+rm(temp)
+gc()
+
+precip <- readGDAL(paste(dataDir,"/bio_12",sep=""),silent = TRUE)
+sites.div <- AddGridData(gridData = precip,dataFrame = sites.div,columnName = "precip",silent = TRUE)
+rm(precip)
+gc()
+
+elev <- readGDAL(paste(dataDir,"/alt",sep=""),silent = TRUE)
+sites.div <- AddGridData(gridData = elev,dataFrame = sites.div,columnName = "elev",silent = TRUE)
+rm(elev)
+gc()
+
 save(sites.div,file=paste(outDir,"modelling_data.Rd",sep=""))
+
+cat('Plotting sites\n')
 
 sitesMap <- SpatialPointsDataFrame(coords = data.frame(x=sites.div$Longitude,y=sites.div$Latitude),
                                  data = sites.div,

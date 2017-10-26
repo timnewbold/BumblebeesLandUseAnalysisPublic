@@ -46,6 +46,7 @@ png(filename = paste(outDir,"IntensityEffectAbundance.png",sep=""),width = 12.5,
 
 PlotErrBar(model = model.ta$model,data = model.ta$data,
            responseVar = "Abundance",logLink = "e",
-           catEffects = "UseIntensity",forPaper = TRUE)
+           catEffects = "UI",forPaper = TRUE,seMultiplier = 1,
+           order = c(7,8,1,2,3,4,5,6))
 
 invisible(dev.off())
