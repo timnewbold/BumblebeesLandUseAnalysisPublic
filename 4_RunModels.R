@@ -57,6 +57,8 @@ saveRDS(object = model.ta,file = paste(outDir,"modelAbundance.rds",sep=""))
 png(filename = paste(outDir,"Results.png",sep=""),width = 12.5,height = 22,
     units = "cm",res = 1200)
 
+par(mfrow=c(3,1))
+
 PlotErrBar(model = model.ta$model,data = model.ta$data,responseVar = "Abundance",
            logLink = "e",catEffects = "UI",order=c(7,8,1,2,3,4,5,6),forPaper=TRUE,
            seMultiplier = 1)
