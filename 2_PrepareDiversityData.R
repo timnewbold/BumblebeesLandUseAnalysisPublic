@@ -1,7 +1,7 @@
 suppressMessages(suppressWarnings(library(yarg)))
 
 dataDir <- "0_data/"
-outDir <- "1_PrepareDiversityData/"
+outDir <- "2_PrepareDiversityData/"
 
 cat('Loading database extracts\n')
 diversity<-readRDS(paste(dataDir,"database.rds",sep=""))

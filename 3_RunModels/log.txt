@@ -1,0 +1,97 @@
+Stage [3] started at [2017-10-04T15:01:57]
+Running somerset [0.1.7] in Python [3.6.0 (v3.6.0:41df79263a11, Dec 23 2016, 08:06:12) [MSC v.1900 64 bit (AMD64)]] on [ucbttne-PC2] [Windows-10-10.0.15063-SP0]
+R scripting front-end version 3.3.2 (2016-10-31)
+[1] "Fixed structure: UI"
+[1] "Comparing random structure 1 of 5"
+[1] "Species_richness~UI+(1|SS)"
+[1] "Comparing random structure 3 of 5"
+[1] "Species_richness~UI+(1|SS)"
+[1] "Performing round 1 of interaction-term removal"
+[1] "Species_richness~UI+(1|SS)"
+[1] "UI"
+[1] 0.871753
+[1] "1 interaction terms have P-values >0.05"
+[1] "Dropping UI"
+[1] "Performing round 2 of interaction-term removal"
+[1] "Species_richness~LandUse+UseIntensity+(1|SS)"
+character(0)
+numeric(0)
+[1] "0 interaction terms have P-values >0.05"
+[1] "Performing round 1 of main-effect removal"
+[1] "Species_richness~LandUse+UseIntensity+(1|SS)"
+[1] "2 candidate main effects have P-values >0.05"
+[1] "LandUse"      "UseIntensity"
+[1] 0.6466858 0.5123960
+[1] "Dropping LandUse"
+[1] "Performing round 2 of main-effect removal"
+[1] "Species_richness~UseIntensity+(1|SS)"
+[1] "1 candidate main effects have P-values >0.05"
+[1] "UseIntensity"
+[1] 0.4767808
+[1] "Dropping UseIntensity"
+[1] "Performing round 3 of main-effect removal"
+[1] "Species_richness~(1|SS)"
+[1] "0 candidate main effects have P-values >0.05"
+character(0)
+numeric(0)
+[1] "Warning: all terms were dropped from the model"
+[1] "Fixed structure: UI"
+[1] "Comparing random structure 1 of 4"
+[1] "LogAbund~UI+(1|SS)"
+[1] "Performing round 1 of interaction-term removal"
+[1] "LogAbund~UI+(1|SS)"
+[1] "UI"
+[1] 0.4929473
+[1] "1 interaction terms have P-values >0.05"
+[1] "Dropping UI"
+[1] "Performing round 2 of interaction-term removal"
+[1] "LogAbund~LandUse+UseIntensity+(1|SS)"
+character(0)
+numeric(0)
+[1] "0 interaction terms have P-values >0.05"
+[1] "Performing round 1 of main-effect removal"
+[1] "LogAbund~LandUse+UseIntensity+(1|SS)"
+[1] "1 candidate main effects have P-values >0.05"
+[1] "LandUse"      "UseIntensity"
+[1] 0.146891970 0.006210019
+[1] "Dropping LandUse"
+[1] "Performing round 2 of main-effect removal"
+[1] "LogAbund~UseIntensity+(1|SS)"
+[1] "0 candidate main effects have P-values >0.05"
+[1] "UseIntensity"
+[1] 0.004553892
+[1] "LogAbund~UseIntensity+(1|SS)"
+Estimating the influence of different studies in the model
+[1] "Fixed structure: UI"
+[1] "Comparing random structure 1 of 4"
+[1] "LogSimpson~UI+(1|SS)"
+[1] "Performing round 1 of interaction-term removal"
+[1] "LogSimpson~UI+(1|SS)"
+[1] "UI"
+[1] 0.9273507
+[1] "1 interaction terms have P-values >0.05"
+[1] "Dropping UI"
+[1] "Performing round 2 of interaction-term removal"
+[1] "LogSimpson~LandUse+UseIntensity+(1|SS)"
+character(0)
+numeric(0)
+[1] "0 interaction terms have P-values >0.05"
+[1] "Performing round 1 of main-effect removal"
+[1] "LogSimpson~LandUse+UseIntensity+(1|SS)"
+[1] "2 candidate main effects have P-values >0.05"
+[1] "LandUse"      "UseIntensity"
+[1] 0.8782158 0.6039913
+[1] "Dropping LandUse"
+[1] "Performing round 2 of main-effect removal"
+[1] "LogSimpson~UseIntensity+(1|SS)"
+[1] "1 candidate main effects have P-values >0.05"
+[1] "UseIntensity"
+[1] 0.5972258
+[1] "Dropping UseIntensity"
+[1] "Performing round 3 of main-effect removal"
+[1] "LogSimpson~(1|SS)"
+[1] "0 candidate main effects have P-values >0.05"
+character(0)
+numeric(0)
+[1] "Warning: all terms were dropped from the model"
+Stage [3] finished at [2017-10-04T15:02:05]

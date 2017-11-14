@@ -30,7 +30,8 @@ elif 'ucbttne-LT2'==socket.gethostname():
     python = 'c:/Python36/python.exe'
     R = 'c:/Program Files/R/R-3.3.2/bin/x64/Rscript.exe'
 
-STAGES = [ ('1', R,              '1_PrepareDiversityData.R'),
-           ('2', R,              '2_PrepareSiteData.R'),
-           ('3', R,              '3_RunModels.R'),
+STAGES = [ ('1', R,              '1_PrepareMapData.R'),
+           ('2', R,              '2_PrepareDiversityData.R'),
+           ('3', R,              '3_PrepareSiteData.R'),
+           ('4', R,              '4_RunModels.R'),
          ]

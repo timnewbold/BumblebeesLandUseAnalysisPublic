@@ -1,14 +1,14 @@
 suppressMessages(suppressWarnings(library(yarg)))
 
 dataDir <- "0_data"
+mapDir <- "1_PrepareMapData/"
 
-inDir <- "1_PrepareDiversityData/"
-
-outDir <- "2_PrepareSiteData/"
+divDir <- "2_PrepareDiversityData/"
+outDir <- "3_PrepareSiteData/"
 
 cat('Preparing site data\n')
 
-load(paste(inDir,"diversity_data.Rd",sep=""))
+load(paste(divDir,"diversity_data.Rd",sep=""))
 
 # diversity$Measurement <- diversity$Measurement.rs
 
@@ -53,6 +53,18 @@ sites.div$UI<-factor(sites.div$UI)
 sites.div$UI<-relevel(sites.div$UI,ref="Natural Minimal use")
 
 cat('Adding other explanatory variables\n')
+
+wgsCRS <- CRS('+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+
+hd <- readGDAL(paste(mapDir,"HabitatDiversity.tif",sep=""),silent = TRUE)
+hd <- projectRaster(from = hd,crs = wgsCRS)
+
+sites.div <- AddGridData(gridData = hd,dataFrame = sites.div,
+                         columnName = "habdiv",silent = TRUE)
+rm(hd)
+gc()
+
+pn <- 
 
 temp <- readGDAL(paste(dataDir,"/bio_1",sep=""),silent = TRUE)
 sites.div <- AddGridData(gridData = temp,dataFrame = sites.div,columnName = "temp",silent = TRUE)
