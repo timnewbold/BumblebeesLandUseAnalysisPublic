@@ -12,6 +12,8 @@ load(paste(divDir,"diversity_data.Rd",sep=""))
 
 # diversity$Measurement <- diversity$Measurement.rs
 
+cat('Compiling site data\n')
+
 sites.div<-SiteMetrics(diversity=diversity,
                        extra.cols=c("SSB","SSBS","Biome","Sampling_method",
                                     "Study_common_taxon","Sampling_effort",
@@ -52,29 +54,59 @@ sites.div$UI[grep("NA",sites.div$UI)]<-NA
 sites.div$UI<-factor(sites.div$UI)
 sites.div$UI<-relevel(sites.div$UI,ref="Natural Minimal use")
 
-cat('Adding other explanatory variables\n')
+cat('Adding other explanatory variables...\n')
 
 wgsCRS <- CRS('+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
 
-hd <- readGDAL(paste(mapDir,"HabitatDiversity.tif",sep=""),silent = TRUE)
-hd <- projectRaster(from = hd,crs = wgsCRS)
+cat('...habitat diversity\n')
+
+hd <- raster(paste(mapDir,"HabitatDiversity.tif",sep=""))
+hd <- setExtent(x = hd,ext = extent(-17367530,17367530,-7342230,7342230))
+hd <- projectRaster(from = hd,crs = wgsCRS,res = 0.05)
+hd <- SpatialGridDataFrame(grid = GridTopology(cellcentre.offset = c(hd@extent@xmin+0.025,
+                                                                     hd@extent@ymin+0.025),
+                                               cellsize = c(0.05,0.05),
+                                               cells.dim = c(ncol(hd),nrow(hd))),
+                           data = data.frame(band1=values(hd)),
+                           proj4string = wgsCRS)
 
 sites.div <- AddGridData(gridData = hd,dataFrame = sites.div,
                          columnName = "habdiv",silent = TRUE)
 rm(hd)
 gc()
 
-pn <- 
+cat('...percent natural habitat\n')
+
+pn <- raster(paste(mapDir,"PercentNatural.tif",sep=""))
+pn <- setExtent(x = pn,ext = extent(-17367530,17367530,-7342230,7342230))
+pn <- projectRaster(from = pn,crs = wgsCRS,res = 0.05)
+pn <- SpatialGridDataFrame(grid = GridTopology(cellcentre.offset = c(pn@extent@xmin+0.025,
+                                                                     pn@extent@ymin+0.025),
+                                               cellsize = c(0.05,0.05),
+                                               cells.dim = c(ncol(pn),nrow(pn))),
+                           data = data.frame(band1=values(pn)),
+                           proj4string = wgsCRS)
+
+sites.div <- AddGridData(gridData = pn,dataFrame = sites.div,
+                         columnName = "percnatural",silent = TRUE)
+rm(pn)
+gc()
+
+cat('...temperature\n')
 
 temp <- readGDAL(paste(dataDir,"/bio_1",sep=""),silent = TRUE)
 sites.div <- AddGridData(gridData = temp,dataFrame = sites.div,columnName = "temp",silent = TRUE)
 rm(temp)
 gc()
 
+cat('...precipitation\n')
+
 precip <- readGDAL(paste(dataDir,"/bio_12",sep=""),silent = TRUE)
 sites.div <- AddGridData(gridData = precip,dataFrame = sites.div,columnName = "precip",silent = TRUE)
 rm(precip)
 gc()
+
+cat('...elevation\n')
 
 elev <- readGDAL(paste(dataDir,"/alt",sep=""),silent = TRUE)
 sites.div <- AddGridData(gridData = elev,dataFrame = sites.div,columnName = "elev",silent = TRUE)
