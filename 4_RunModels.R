@@ -8,6 +8,16 @@ load(paste(dataDir,"modelling_data.Rd",sep=""))
 
 sites.div$LogAbund <- log(sites.div$Total_abundance+1)
 sites.div$LogSimpson <- log(sites.div$Simpson_diversity)
+
+sites.div$LogPesticide <- log(sites.div$pesticide)
+sites.div$PesticideCut <- cut(sites.div$pesticide,breaks=c(-1,0,4.748017,53.42977,3010),labels=c("None","Low","Medium","High"))
+
+sites.div$LU_Pest <- paste(sites.div$LandUse,sites.div$PesticideCut)
+sites.div$LU_Pest[grep("NA",sites.div$LU_Pest)] <- NA
+sites.div$LU_Pest[grep("Natural",sites.div$LU_Pest)] <- "Natural"
+sites.div$LU_Pest[(sites.div$LU_Pest=="Cropland None")] <- "Cropland Low"
+sites.div$LU_Pest[grep("Urban",sites.div$LU_Pest)] <- "Urban"
+
 # 
 # rc.sr <- CompareRandoms(dataset = sites.div,responseVar = "Species_richness",
 #                         fitFamily = "poisson",fixedFactors = c("UI"),
@@ -73,3 +83,20 @@ PlotContEffects(model = model.sr$model,data = model.sr$data,effects = "percnatur
                 ylab = "Species richness",seMultiplier = 1)
 
 invisible(dev.off())
+
+model.data <- sites.div[,c('Species_richness','LandUse','PesticideCut','LU_Pest','SS','SSBS'),]
+model.data <- na.omit(model.data)
+model.data$LU_Pest <- factor(model.data$LU_Pest)
+model.data$LU_Pest <- relevel(model.data$LU_Pest,ref="Natural")
+
+m3 <- glmer(Species_richness~LU_Pest+(1|SS)+(1|SSBS),data=model.data,family=poisson)
+
+png(filename = paste(outDir,"PesticideResults.png",sep=""),width = 12.5,height = 8,
+    units = "cm",res = 1200)
+
+PlotErrBar(model=m3,data=model.data,responseVar = "SR",logLink = "e",
+           catEffects = "LU_Pest",seMultiplier = 1,order=c(1,3,4,2,5,6),
+           errbar.cols = c("#66A61E",rep("#E6AB02",3), "#D95F02","#E7298A"))
+
+invisible(dev.off())
+

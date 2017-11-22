@@ -18,7 +18,8 @@ sites.div<-SiteMetrics(diversity=diversity,
                        extra.cols=c("SSB","SSBS","Biome","Sampling_method",
                                     "Study_common_taxon","Sampling_effort",
                                     "Sampling_effort_unit","Realm",
-                                    "Predominant_land_use","Class"),
+                                    "Predominant_land_use","Class",
+                                    "Country"),
                        sites.are.unique=TRUE,
                        srEstimators=FALSE)
 
@@ -57,6 +58,7 @@ sites.div$UI<-relevel(sites.div$UI,ref="Natural Minimal use")
 cat('Adding other explanatory variables...\n')
 
 wgsCRS <- CRS('+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+behrCRS <- CRS('+proj=cea +lon_0=0 +lat_ts=30 +x_0=0 +y_0=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs')
 
 cat('...habitat diversity\n')
 
@@ -112,6 +114,19 @@ elev <- readGDAL(paste(dataDir,"/alt",sep=""),silent = TRUE)
 sites.div <- AddGridData(gridData = elev,dataFrame = sites.div,columnName = "elev",silent = TRUE)
 rm(elev)
 gc()
+
+cat('...pesticide application\n')
+
+pest <- raster(paste(dataDir,"/PesticidesSum.tif",sep=""))
+pest <- extend(pest,extent(-180,180,-90,90))
+pest <- SpatialGridDataFrame(grid = GridTopology(cellcentre.offset = c(pest@extent@xmin+0.05,
+                                                                     pest@extent@ymin+0.05),
+                                               cellsize = c(0.1,0.1),
+                                               cells.dim = c(ncol(pest),nrow(pest))),
+                           data = data.frame(band1=values(pest)),
+                           proj4string = wgsCRS)
+sites.div <- AddGridData(gridData = pest,dataFrame = sites.div,columnName = "pesticide")
+
 
 save(sites.div,file=paste(outDir,"modelling_data.Rd",sep=""))
 
