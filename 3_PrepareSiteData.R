@@ -115,6 +115,20 @@ sites.div <- AddGridData(gridData = elev,dataFrame = sites.div,columnName = "ele
 rm(elev)
 gc()
 
+cat('...community thermal index\n')
+
+tei <- raster(paste(dataDir,"/Bumblebees.asc",sep=""))
+tei <- setExtent(x = tei,ext = extent(-17367530,17367530,-7342230,7342230))
+crs(tei) <- behrCRS
+tei <- projectRaster(from = tei,crs = wgsCRS,res = 0.1)
+tei <- SpatialGridDataFrame(grid = GridTopology(cellcentre.offset = c(tei@extent@xmin+0.05,
+                                                                      tei@extent@ymin+0.05),
+                                               cellsize = c(0.1,0.1),
+                                               cells.dim = c(ncol(tei),nrow(tei))),
+                           data = data.frame(band1=values(tei)),
+                           proj4string = wgsCRS)
+sites.div <- AddGridData(gridData = tei,dataFrame = sites.div,columnName = "TEI",silent = TRUE)
+
 cat('...pesticide application\n')
 
 pest <- raster(paste(dataDir,"/PesticidesSum.tif",sep=""))
