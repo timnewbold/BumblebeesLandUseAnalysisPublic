@@ -117,7 +117,7 @@ gc()
 
 cat('...community thermal index\n')
 
-tei <- raster(paste(dataDir,"/Bumblebees.asc",sep=""))
+tei <- raster(paste(dataDir,"/BumblebeesTEI.asc",sep=""))
 tei <- setExtent(x = tei,ext = extent(-17367530,17367530,-7342230,7342230))
 crs(tei) <- behrCRS
 tei <- projectRaster(from = tei,crs = wgsCRS,res = 0.1)
@@ -129,6 +129,23 @@ tei <- SpatialGridDataFrame(grid = GridTopology(cellcentre.offset = c(tei@extent
                            proj4string = wgsCRS)
 sites.div <- AddGridData(gridData = tei,dataFrame = sites.div,columnName = "TEI",silent = TRUE)
 
+rm(tei)
+gc()
+
+cat('...community precipitation index\n')
+
+pei <- raster(paste(dataDir,"/BumblebeesPEI.asc",sep=""))
+pei <- setExtent(x = pei,ext = extent(-17367530,17367530,-7342230,7342230))
+crs(pei) <- behrCRS
+pei <- projectRaster(from = pei,crs = wgsCRS,res = 0.1)
+pei <- SpatialGridDataFrame(grid = GridTopology(cellcentre.offset = c(pei@extent@xmin+0.05,
+                                                                      pei@extent@ymin+0.05),
+                                                cellsize = c(0.1,0.1),
+                                                cells.dim = c(ncol(pei),nrow(pei))),
+                            data = data.frame(band1=values(pei)),
+                            proj4string = wgsCRS)
+sites.div <- AddGridData(gridData = pei,dataFrame = sites.div,columnName = "PEI",silent = TRUE)
+
 cat('...pesticide application\n')
 
 pest <- raster(paste(dataDir,"/PesticidesSum.tif",sep=""))
@@ -139,7 +156,7 @@ pest <- SpatialGridDataFrame(grid = GridTopology(cellcentre.offset = c(pest@exte
                                                cells.dim = c(ncol(pest),nrow(pest))),
                            data = data.frame(band1=values(pest)),
                            proj4string = wgsCRS)
-sites.div <- AddGridData(gridData = pest,dataFrame = sites.div,columnName = "pesticide")
+sites.div <- AddGridData(gridData = pest,dataFrame = sites.div,columnName = "pesticide",silent = TRUE)
 
 
 save(sites.div,file=paste(outDir,"modelling_data.Rd",sep=""))

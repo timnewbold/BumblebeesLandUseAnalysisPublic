@@ -28,10 +28,18 @@ sites.div$LU_Pest[grep("Urban",sites.div$LU_Pest)] <- "Urban"
 #                         siteRandom = TRUE,blockRandom = FALSE,verbose = TRUE,
 #                         optimizer = "bobyqa",randomSlopes = FALSE)
 
+test <- ModelSelect(all.data = sites.div,responseVar = "Species_richness",fitFamily = "poisson",
+                    fixedFactors = c("LandUse"),fixedTerms = list(TEI=2),
+                    fixedInteractions = "LandUse:poly(TEI,2)",
+                    randomStruct = "(1|SS)+(1|SSBS)",verbose = TRUE,optimizer = "bobyqa")
+
 model.sr <- ModelSelect(all.data = sites.div,responseVar = "Species_richness",
                         fitFamily = "poisson",fixedFactors = c("UI"),
-                        fixedTerms = list(habdiv=1,percnatural=1,temp=1,precip=1,elev=1),
-                        fixedInteractions = c("LandUse:poly(habdiv,1)",
+                        fixedTerms = list(TEI=1,PEI=1,habdiv=1,percnatural=1,
+                                          temp=1,precip=1,elev=1),
+                        fixedInteractions = c("LandUse:poly(TEI,1)",
+                                              "LandUse:poly(PEI,1)",
+                                              "LandUse:poly(habdiv,1)",
                                               "LandUse:poly(percnatural,1)",
                                               "poly(habdiv,1):poly(percnatural,1)"),
                         randomStruct = "(1|SS)+(1|SSBS)",verbose = TRUE,
@@ -43,9 +51,12 @@ model.sr <- ModelSelect(all.data = sites.div,responseVar = "Species_richness",
 #                         optimizer = "bobyqa",randomSlopes = FALSE)
 
 model.ta <- ModelSelect(all.data = sites.div,responseVar = "LogAbund",
-                        fitFamily = "gaussian",fixedFactors = c("UI"),
-                        fixedTerms = list(habdiv=1,percnatural=1,temp=1,precip=1,elev=1),
-                        fixedInteractions = c("LandUse:poly(habdiv,1)",
+                        fitFamily = "gaussian",fixedFactors = c("LandUse"),
+                        fixedTerms = list(TEI=1,PEI=1,habdiv=1,percnatural=1,
+                                          temp=1,precip=1,elev=1),
+                        fixedInteractions = c("LandUse:poly(TEI,1)",
+                                              "LandUse:poly(PEI,1)",
+                                              "LandUse:poly(habdiv,1)",
                                               "LandUse:poly(percnatural,1)",
                                               "poly(habdiv,1):poly(percnatural,1)"),
                         randomStruct = "(1|SS)",verbose = TRUE,
@@ -70,17 +81,17 @@ png(filename = paste(outDir,"Results.png",sep=""),width = 12.5,height = 22,
 par(mfrow=c(3,1))
 
 PlotErrBar(model = model.ta$model,data = model.ta$data,responseVar = "Abundance",
-           logLink = "e",catEffects = "UI",order=c(7,8,1,2,3,4,5,6),forPaper=TRUE,
+           logLink = "e",catEffects = "LandUse",forPaper=TRUE,order = c(4,1,2,3),
            seMultiplier = 1)
 
 PlotContEffects(model = model.ta$model,data = model.ta$data,effects = "percnatural",
-                otherContEffects = c("precip","elev"),byFactor = "LandUse",
-                xlab = "% natural",ylab = "Abundance",seMultiplier = 1,
-                otherFactors = list(UI="Primary vegetation Minimal use"))
+                otherContEffects = c("precip","elev","TEI","PEI","temp"),
+                byFactor = "LandUse",
+                xlab = "% natural",ylab = "Abundance",seMultiplier = 1)
 
 PlotContEffects(model = model.sr$model,data = model.sr$data,effects = "percnatural",
                 otherContEffects = c("precip"),byFactor = "LandUse",xlab = "% natural",
-                ylab = "Species richness",seMultiplier = 1)
+                ylab = "Species richness",seMultiplier = 0.5)
 
 invisible(dev.off())
 
