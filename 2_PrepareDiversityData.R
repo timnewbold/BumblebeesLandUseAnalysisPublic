@@ -101,7 +101,5 @@ diversity$LandUse <- factor(diversity$LandUse,levels=c("Natural","Human"))
 
 diversity$occur <- ifelse(diversity$Measurement>0,1,0)
 
-
-
 cat('Saving diversity data\n')
 save(diversity,file=paste(outDir,"diversity_data.Rd",sep=""))

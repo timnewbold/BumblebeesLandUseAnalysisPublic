@@ -1,6 +1,8 @@
 0_data
 1_PrepareMapData
 2_PrepareDiversityData
-3_PrepareSiteData
-4_RunModels
+3_RunSpeciesLevelModels
+4_PlotSpeciesLevelModels
 X_RunSpeciesLevelModels.R
+X_PrepareSiteData.R
+X_RunModels.R
