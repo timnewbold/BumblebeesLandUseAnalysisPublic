@@ -29,14 +29,14 @@ cat('Temperature models - climate\n')
 
 m_clim <- GLMER(modelData = modelData,responseVar = "occur",
                 fitFamily = "binomial",
-                fixedStruct = "poly(TEI_BL,2)+poly(TEI_delta,2)+poly(TEI_BL,2):poly(TEI_delta,2)",
+                fixedStruct = "poly(TEI_BL,2)+poly(TEI_delta,2)",
                 randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
 
 cat('Temperature models - combined\n')
 
 m_full <- GLMER(modelData = modelData,responseVar = "occur",
                 fitFamily = "binomial",
-                fixedStruct = "LandUse+poly(TEI_BL,2)+poly(TEI_delta,2)+LandUse:poly(TEI_BL,2)+LandUse:poly(TEI_delta,2)+poly(TEI_BL,2):poly(TEI_delta,2)+LandUse:poly(TEI_BL,2):poly(TEI_delta,2)",
+                fixedStruct = "LandUse+poly(TEI_BL,2)+poly(TEI_delta,2)+LandUse:poly(TEI_BL,2)+LandUse:poly(TEI_delta,2)+LandUse:poly(TEI_BL,2):poly(TEI_delta,2)",
                 randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
 
 print(AIC(m_null$model,m_lu$model,m_clim$model,m_full$model))
@@ -45,46 +45,46 @@ save(m_null,m_lu,m_clim,m_full,file = paste(outDir,"TemperatureModels.rd",sep=""
 
 rm(m_null,m_lu,m_clim,m_full)
 
-
-modelData <- diversity[,c('occur','LandUse','PEI_BL',
-                          'PEI_delta','SS','SSBS',
-                          'Taxon_name_entered')]
-modelData <- na.omit(modelData)
-
-
-cat('Precipitation models - null\n')
-
-m_null <- GLMER(modelData = modelData,responseVar = "occur",
-                fitFamily = "binomial",
-                fixedStruct = "1",
-                randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
-
-cat('Precipitation models - land use\n')
-
-m_lu <- GLMER(modelData = modelData,responseVar = "occur",
-              fitFamily = "binomial",
-              fixedStruct = "LandUse",
-              randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
-
-cat('Precipitation models - climate\n')
-
-m_clim <- GLMER(modelData = modelData,responseVar = "occur",
-                fitFamily = "binomial",
-                fixedStruct = "poly(PEI_BL,2)+poly(PEI_delta,2)+poly(PEI_BL,2):poly(PEI_delta,2)",
-                randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
-
-cat('Precipitation models - combined\n')
-
-m_full <- GLMER(modelData = modelData,responseVar = "occur",
-                fitFamily = "binomial",
-                fixedStruct = "LandUse+poly(PEI_BL,2)+poly(PEI_delta,2)+LandUse:poly(PEI_BL,2)+LandUse:poly(PEI_delta,2)+poly(PEI_BL,2):poly(PEI_delta,2)+LandUse:poly(PEI_BL,2):poly(PEI_delta,2)",
-                randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
-
-AIC(m_null,m_lu,m_clim,m_full)
-
-save(m_null,m_lu,m_clim,m_full,file = paste(outDir,"PrecipitationModels.rd",sep=""))
-
-rm(m_null,m_lu,m_clim,m_full)
+# 
+# modelData <- diversity[,c('occur','LandUse','PEI_BL',
+#                           'PEI_delta','SS','SSBS',
+#                           'Taxon_name_entered')]
+# modelData <- na.omit(modelData)
+# 
+# 
+# cat('Precipitation models - null\n')
+# 
+# m_null <- GLMER(modelData = modelData,responseVar = "occur",
+#                 fitFamily = "binomial",
+#                 fixedStruct = "1",
+#                 randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
+# 
+# cat('Precipitation models - land use\n')
+# 
+# m_lu <- GLMER(modelData = modelData,responseVar = "occur",
+#               fitFamily = "binomial",
+#               fixedStruct = "LandUse",
+#               randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
+# 
+# cat('Precipitation models - climate\n')
+# 
+# m_clim <- GLMER(modelData = modelData,responseVar = "occur",
+#                 fitFamily = "binomial",
+#                 fixedStruct = "poly(PEI_BL,2)+poly(PEI_delta,2)+poly(PEI_BL,2):poly(PEI_delta,2)",
+#                 randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
+# 
+# cat('Precipitation models - combined\n')
+# 
+# m_full <- GLMER(modelData = modelData,responseVar = "occur",
+#                 fitFamily = "binomial",
+#                 fixedStruct = "LandUse+poly(PEI_BL,2)+poly(PEI_delta,2)+LandUse:poly(PEI_BL,2)+LandUse:poly(PEI_delta,2)+poly(PEI_BL,2):poly(PEI_delta,2)+LandUse:poly(PEI_BL,2):poly(PEI_delta,2)",
+#                 randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
+# 
+# AIC(m_null,m_lu,m_clim,m_full)
+# 
+# save(m_null,m_lu,m_clim,m_full,file = paste(outDir,"PrecipitationModels.rd",sep=""))
+# 
+# rm(m_null,m_lu,m_clim,m_full)
 
 # 
 # 
