@@ -23,7 +23,7 @@ nd <- data.frame(
   TEI_delta=xVals,
   occur=0,
   LandUse=factor("Natural",levels=levels(m_full$data$LandUse)),
-  TEI_BL=quantile(m_full$data$TEI_BL,0.025),
+  TEI_BL=quantile(m_full$data$TEI_BL,0.1),
   row.names = NULL)
 
 preds.LowTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
@@ -38,7 +38,7 @@ nd <- data.frame(
   TEI_delta=xVals,
   occur=0,
   LandUse=factor("Human",levels=levels(m_full$data$LandUse)),
-  TEI_BL=quantile(m_full$data$TEI_BL,0.025),
+  TEI_BL=quantile(m_full$data$TEI_BL,0.1),
   row.names = NULL)
 
 preds.LowTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
@@ -94,7 +94,7 @@ nd <- data.frame(
   TEI_delta=xVals,
   occur=0,
   LandUse=factor("Natural",levels=levels(m_full$data$LandUse)),
-  TEI_BL=quantile(m_full$data$TEI_BL,0.975),
+  TEI_BL=quantile(m_full$data$TEI_BL,0.9),
   row.names = NULL)
 
 preds.HighTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
@@ -109,7 +109,7 @@ nd <- data.frame(
   TEI_delta=xVals,
   occur=0,
   LandUse=factor("Human",levels=levels(m_full$data$LandUse)),
-  TEI_BL=quantile(m_full$data$TEI_BL,0.975),
+  TEI_BL=quantile(m_full$data$TEI_BL,0.9),
   row.names = NULL)
 
 preds.HighTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
