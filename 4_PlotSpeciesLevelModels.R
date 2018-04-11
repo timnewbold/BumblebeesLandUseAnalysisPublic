@@ -4,7 +4,7 @@ inDir <- "3_RunSpeciesLevelModels/"
 
 outDir <- "4_PlotSpeciesLevelModels/"
 
-# load(paste(inDir,"TemperatureModels.rd",sep=""))
+load(paste(inDir,"TemperatureModels.rd",sep=""))
 
 png(paste(outDir,"TemperatureResultsInteraction.png",sep=""),
     width = 17.5,height = 5,units = "cm",res = 1200)
