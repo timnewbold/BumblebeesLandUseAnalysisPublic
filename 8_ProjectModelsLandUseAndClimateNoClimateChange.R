@@ -124,12 +124,19 @@ pred_2005_propn <- sum(pred_2005,na.rm=TRUE)/sum(pred_bl,na.rm=TRUE)
 values(pred_2005_propn) <- values(pred_2005_propn) * values(mask)
 
 brks <- c(0,0.85,0.9,0.95,0.975,1,1.025,1.05,1.1,1.15,9e99)
+brks[length(brks)] <- max(1.151,max(values(pred_2005_propn),na.rm=TRUE))
+brks[1] <- min(0.849,min(values(pred_2005_propn),na.rm=TRUE))
 
-png(filename = paste(outDir,"2005MapLandUseAndClimateNoClimateChange.png",sep=""),width = 17.5,height = 13.5,units = "cm",res = 1200)
+png(filename = paste(outDir,"2005MapLandUseAndClimateNoClimateChange.png",sep=""),
+    width = 17.5,height = 8,units = "cm",res = 1200)
 
-plot(pred_2005_propn,breaks=brks,col=brewer.pal(n = length(brks),name = "RdYlBu"),xlim=c(-180,40),ylim=c(10,78))
+par(mar=c(0.5,0.5,0.5,4))
 
-text(-180,30,paste("Average intactness\n= ",round(mean(values(pred_2005_propn),na.rm=TRUE)*100,0),"%",sep=""))
+plot(pred_2005_propn,breaks=brks,col=brewer.pal(n = length(brks),name = "RdYlBu"),
+     xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n")
+
+text(-160,30,paste("Average intactness\n= ",round(
+  mean(values(pred_2005_propn),na.rm=TRUE)*100,0),"%",sep=""))
 
 invisible(dev.off())
 
