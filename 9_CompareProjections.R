@@ -19,8 +19,8 @@ cols <- c(rev(brewer.pal(n = floor((length(brks)-1)/2),name = "Reds")),
 
 
 
-# png(filename = paste(outDir,"DifferenceMap.png",sep=""),
-#     width = 17.5,height = 8,units = "cm",res = 1200)
+png(filename = paste(outDir,"DifferenceMap.png",sep=""),
+    width = 17.5,height = 8,units = "cm",res = 1200)
 
 par(mar=c(0.5,0.5,0.5,4))
 
@@ -33,8 +33,8 @@ no.change <- round((length(which(values(diffMap) == 0))/length(
 better <- round((length(which(values(diffMap) >= 0.01))/length(
   which(!is.na(values(diffMap)))))*100,0)
 
-text(-170,45,paste(worse,"% worse"),pos=4)
-text(-170,40,paste(no.change,"% the same"),pos=4)
-text(-170,35,paste(better,"% better"),pos=4)
+text(-180,45,paste(worse,"% worse"),pos=4)
+text(-180,40,paste(no.change,"% the same"),pos=4)
+text(-180,35,paste(better,"% better"),pos=4)
 
-# invisible(dev.off())
+invisible(dev.off())
