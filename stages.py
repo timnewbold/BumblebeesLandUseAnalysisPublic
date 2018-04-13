@@ -38,4 +38,5 @@ STAGES = [ ('1', R,              '1_PrepareMapData.R'),
            ('6', R,              '6_ProjectModelsClimate.R'),
            ('7', R,              '7_ProjectModelsLandUseAndClimate.R'),
            ('8', R,              '8_ProjectModelsLandUseAndClimateNoClimateChange.R'),
+           ('9', R,              '9_CompareProjections.R'),
          ]
