@@ -1,13 +1,13 @@
 suppressMessages(suppressWarnings(library(raster)))
 suppressMessages(suppressWarnings(library(RColorBrewer)))
 
-luDir <-  "5_ProjectModelsLandUse/"
-luClimDir <- "7_ProjectModelsLandUseAndClimate/"
+luDir <-  "10_ProjectModelsLandUseFuture/"
+luClimDir <- "12_ProjectModelsLandUseAndClimateFuture/"
 
-outDir <- "9_CompareProjections/"
+outDir <- "14_CompareProjectionsFuture/"
 
-luMap <- readRDS(paste(luDir,"2005MapLandUse.rds",sep=""))
-luClimMap <- readRDS(paste(luClimDir,"2005MapLandUseAndClimate.rds",sep=""))
+luMap <- readRDS(paste(luDir,"2070MapLandUse.rds",sep=""))
+luClimMap <- readRDS(paste(luClimDir,"2070MapLandUseAndClimate.rds",sep=""))
 
 diffMap <- luClimMap - luMap
 

@@ -42,12 +42,12 @@ pred_bl <- stack(mapply(function(bl,delta){
 #   df$TEI_BL[which(df$TEI_BL > 0.74)] <- NA
 #   df$TEI_delta[which(df$TEI_delta < 0.005)] <- NA
 #   df$TEI_delta[which(df$TEI_delta > 0.035)] <- NA
-
-  df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
-  df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
-  df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
-  df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
-  
+# 
+#   df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
+#   df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
+#   df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
+#   df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
+#   
   
   df$occur <- 0
   
@@ -92,12 +92,12 @@ pred_2005 <- stack(mapply(function(bl,delta){
   df$TEI_delta <- values(delta)
   
   df[is.na(df)] <- NA
-  
-  df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
-  df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
-  df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
-  df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
-  
+  # 
+  # df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
+  # df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
+  # df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
+  # df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
+  # 
   df$occur <- 0
   
   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
@@ -115,12 +115,12 @@ pred_2005 <- stack(mapply(function(bl,delta){
   df$LandUse <- factor("Human",levels=levels(m_full$data$LandUse))
   df$TEI_BL <- values(bl)
   df$TEI_delta <- values(delta)
-  
-  df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
-  df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
-  df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
-  df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
-  
+  # 
+  # df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
+  # df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
+  # df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
+  # df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
+  # 
   df[is.na(df)] <- NA
   
   df$occur <- 0
