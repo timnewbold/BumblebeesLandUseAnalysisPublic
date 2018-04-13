@@ -43,7 +43,6 @@ pred_bl <- stack(mapply(function(bl,delta){
 #   df$TEI_delta[which(df$TEI_delta < 0.005)] <- NA
 #   df$TEI_delta[which(df$TEI_delta > 0.035)] <- NA
 
-  
   df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
   df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
   df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
