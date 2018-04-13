@@ -135,8 +135,8 @@ par(mar=c(0.5,0.5,0.5,4))
 plot(pred_2005_propn,breaks=brks,col=brewer.pal(n = length(brks),name = "RdYlBu"),
      xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n")
 
-text(-160,30,paste("Average intactness\n= ",round(
-  mean(values(pred_2005_propn),na.rm=TRUE)*100,0),"%",sep=""))
+text(-160,30,paste("Average\nintactness\n= ",
+                   round(mean(values(pred_2005_propn),na.rm=TRUE)*100,0),"%",sep=""))
 
 invisible(dev.off())
 
