@@ -60,9 +60,9 @@ preds.LowTEI.LUHuman <- 1/(1+exp(-preds.LowTEI.LUHuman))
 
 preds.LowTEI.LUHumanRel <- preds.LowTEI.LUHuman/preds.LowTEI.LUNatural$y
 
-plot(xVals,preds.LowTEI.LUHumanRel$y*100,type="l",ylim=ylims,col="#1b9e77",xlab="Delta TEI",ylab="P. occur",main="Low Baseline TEI")
-points(xVals,preds.LowTEI.LUHumanRel$yplus*100,type="l",lty=2,col="#1b9e77")
-points(xVals,preds.LowTEI.LUHumanRel$yminus*100,type="l",lty=2,col="#1b9e77")
+plot(xVals,preds.LowTEI.LUHumanRel$y*100,type="l",ylim=ylims,col="#d95f02",xlab="Delta TEI",ylab="P. occur",main="Low Baseline TEI")
+points(xVals,preds.LowTEI.LUHumanRel$yplus*100,type="l",lty=2,col="#d95f02")
+points(xVals,preds.LowTEI.LUHumanRel$yminus*100,type="l",lty=2,col="#d95f02")
 
 abline(h=100,lty=2,col="#999999")
 
@@ -102,9 +102,10 @@ preds.MedTEI.LUHuman <- 1/(1+exp(-preds.MedTEI.LUHuman))
 
 preds.MedTEI.LUHumanRel <- preds.MedTEI.LUHuman/preds.MedTEI.LUNatural$y
 
-plot(xVals,preds.MedTEI.LUHumanRel$y*100,type="l",ylim=ylims,col="#1b9e77",xlab="Delta TEI",ylab="P. occur",main="Low Baseline TEI")
-points(xVals,preds.MedTEI.LUHumanRel$yplus*100,type="l",lty=2,col="#1b9e77")
-points(xVals,preds.MedTEI.LUHumanRel$yminus*100,type="l",lty=2,col="#1b9e77")
+plot(xVals,preds.MedTEI.LUHumanRel$y*100,type="l",ylim=ylims,col="#d95f02",
+     xlab="Delta TEI",ylab="P. occur",main="Median Baseline TEI")
+points(xVals,preds.MedTEI.LUHumanRel$yplus*100,type="l",lty=2,col="#d95f02")
+points(xVals,preds.MedTEI.LUHumanRel$yminus*100,type="l",lty=2,col="#d95f02")
 
 abline(h=100,lty=2,col="#999999")
 
@@ -145,9 +146,10 @@ preds.HighTEI.LUHuman <- 1/(1+exp(-preds.HighTEI.LUHuman))
 
 preds.HighTEI.LUHumanRel <- preds.HighTEI.LUHuman/preds.HighTEI.LUNatural$y
 
-plot(xVals,preds.HighTEI.LUHumanRel$y*100,type="l",ylim=ylims,col="#1b9e77",xlab="Delta TEI",ylab="P. occur",main="Low Baseline TEI")
-points(xVals,preds.HighTEI.LUHumanRel$yplus*100,type="l",lty=2,col="#1b9e77")
-points(xVals,preds.HighTEI.LUHumanRel$yminus*100,type="l",lty=2,col="#1b9e77")
+plot(xVals,preds.HighTEI.LUHumanRel$y*100,type="l",ylim=ylims,col="#d95f02",
+     xlab="Delta TEI",ylab="P. occur",main="High Baseline TEI")
+points(xVals,preds.HighTEI.LUHumanRel$yplus*100,type="l",lty=2,col="#d95f02")
+points(xVals,preds.HighTEI.LUHumanRel$yminus*100,type="l",lty=2,col="#d95f02")
 
 abline(h=100,lty=2,col="#999999")
 
