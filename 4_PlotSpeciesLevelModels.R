@@ -6,6 +6,14 @@ outDir <- "4_PlotSpeciesLevelModels/"
 
 load(paste(inDir,"TemperatureModels.rd",sep=""))
 
+png(paste(outDir,"LandUse.png",sep=""),
+    width = 8.5,height = 8.5,units = "cm",res = 1200)
+
+PlotGLMERFactor(model = m_lu$model,data = m_lu$data,responseVar = "P. occur",
+                logLink = "b",catEffects = "LandUse",seMultiplier = 1.96)
+
+invisible(dev.off())
+
 png(paste(outDir,"TemperatureResultsInteraction.png",sep=""),
     width = 17.5,height = 5,units = "cm",res = 1200)
 
@@ -29,9 +37,9 @@ nd <- data.frame(
 preds.LowTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
 preds.LowTEI.LUNatural <- 1/(1+exp(-preds.LowTEI.LUNatural))
 
-plot(xVals,preds.LowTEI.LUNatural$y,type="l",ylim=c(0,1),col="#00ff00",xlab="Delta TEI",ylab="P. occur",main="Low Baseline TEI")
-points(xVals,preds.LowTEI.LUNatural$yplus,type="l",lty=2,col="#00ff00")
-points(xVals,preds.LowTEI.LUNatural$yminus,type="l",lty=2,col="#00ff00")
+plot(xVals,preds.LowTEI.LUNatural$y,type="l",ylim=c(0,1),col="#1b9e77",xlab="Delta TEI",ylab="P. occur",main="Low Baseline TEI")
+points(xVals,preds.LowTEI.LUNatural$yplus,type="l",lty=2,col="#1b9e77")
+points(xVals,preds.LowTEI.LUNatural$yminus,type="l",lty=2,col="#1b9e77")
 
 
 nd <- data.frame(
@@ -44,9 +52,9 @@ nd <- data.frame(
 preds.LowTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
 preds.LowTEI.LUHuman <- 1/(1+exp(-preds.LowTEI.LUHuman))
 
-points(xVals,preds.LowTEI.LUHuman$y,type="l",ylim=c(0,1),col="#ff0000")
-points(xVals,preds.LowTEI.LUHuman$yplus,type="l",lty=2,col="#ff0000")
-points(xVals,preds.LowTEI.LUHuman$yminus,type="l",lty=2,col="#ff0000")
+points(xVals,preds.LowTEI.LUHuman$y,type="l",ylim=c(0,1),col="#d95f02")
+points(xVals,preds.LowTEI.LUHuman$yplus,type="l",lty=2,col="#d95f02")
+points(xVals,preds.LowTEI.LUHuman$yminus,type="l",lty=2,col="#d95f02")
 
 
 xVals <- seq(
@@ -64,9 +72,9 @@ nd <- data.frame(
 preds.HighTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
 preds.HighTEI.LUNatural <- 1/(1+exp(-preds.HighTEI.LUNatural))
 
-plot(xVals,preds.HighTEI.LUNatural$y,type="l",ylim=c(0,1),col="#00ff00",xlab="Delta TEI",ylab="P. occur",main="Median Baseline TEI")
-points(xVals,preds.HighTEI.LUNatural$yplus,type="l",lty=2,col="#00ff00")
-points(xVals,preds.HighTEI.LUNatural$yminus,type="l",lty=2,col="#00ff00")
+plot(xVals,preds.HighTEI.LUNatural$y,type="l",ylim=c(0,1),col="#1b9e77",xlab="Delta TEI",ylab="P. occur",main="Median Baseline TEI")
+points(xVals,preds.HighTEI.LUNatural$yplus,type="l",lty=2,col="#1b9e77")
+points(xVals,preds.HighTEI.LUNatural$yminus,type="l",lty=2,col="#1b9e77")
 
 
 nd <- data.frame(
@@ -79,9 +87,9 @@ nd <- data.frame(
 preds.HighTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
 preds.HighTEI.LUHuman <- 1/(1+exp(-preds.HighTEI.LUHuman))
 
-points(xVals,preds.HighTEI.LUHuman$y,type="l",ylim=c(0,1),col="#ff0000")
-points(xVals,preds.HighTEI.LUHuman$yplus,type="l",lty=2,col="#ff0000")
-points(xVals,preds.HighTEI.LUHuman$yminus,type="l",lty=2,col="#ff0000")
+points(xVals,preds.HighTEI.LUHuman$y,type="l",ylim=c(0,1),col="#d95f02")
+points(xVals,preds.HighTEI.LUHuman$yplus,type="l",lty=2,col="#d95f02")
+points(xVals,preds.HighTEI.LUHuman$yminus,type="l",lty=2,col="#d95f02")
 
 
 
@@ -100,9 +108,9 @@ nd <- data.frame(
 preds.HighTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
 preds.HighTEI.LUNatural <- 1/(1+exp(-preds.HighTEI.LUNatural))
 
-plot(xVals,preds.HighTEI.LUNatural$y,type="l",ylim=c(0,1),col="#00ff00",xlab="Delta TEI",ylab="P. occur",main="High Baseline TEI")
-points(xVals,preds.HighTEI.LUNatural$yplus,type="l",lty=2,col="#00ff00")
-points(xVals,preds.HighTEI.LUNatural$yminus,type="l",lty=2,col="#00ff00")
+plot(xVals,preds.HighTEI.LUNatural$y,type="l",ylim=c(0,1),col="#1b9e77",xlab="Delta TEI",ylab="P. occur",main="High Baseline TEI")
+points(xVals,preds.HighTEI.LUNatural$yplus,type="l",lty=2,col="#1b9e77")
+points(xVals,preds.HighTEI.LUNatural$yminus,type="l",lty=2,col="#1b9e77")
 
 
 nd <- data.frame(
@@ -115,8 +123,8 @@ nd <- data.frame(
 preds.HighTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
 preds.HighTEI.LUHuman <- 1/(1+exp(-preds.HighTEI.LUHuman))
 
-points(xVals,preds.HighTEI.LUHuman$y,type="l",ylim=c(0,1),col="#ff0000")
-points(xVals,preds.HighTEI.LUHuman$yplus,type="l",lty=2,col="#ff0000")
-points(xVals,preds.HighTEI.LUHuman$yminus,type="l",lty=2,col="#ff0000")
+points(xVals,preds.HighTEI.LUHuman$y,type="l",ylim=c(0,1),col="#d95f02")
+points(xVals,preds.HighTEI.LUHuman$yplus,type="l",lty=2,col="#d95f02")
+points(xVals,preds.HighTEI.LUHuman$yminus,type="l",lty=2,col="#d95f02")
 
 invisible(dev.off())

@@ -156,20 +156,30 @@ invisible(mapply(function(scenario,scenario.label){
   
   values(pred_2070_propn) <- values(pred_2070_propn) * values(mask)
   
-  brks <- c(0,0.85,0.9,0.95,0.975,1,1.025,1.05,1.1,1.15,9e99)
+  brks <- c(0,0.85,0.9,0.95,0.975,1.025,1.05,1.1,1.15,9e99)
   brks[length(brks)] <- max(1.151,max(values(pred_2070_propn),na.rm=TRUE))
   brks[1] <- min(0.849,min(values(pred_2070_propn),na.rm=TRUE))
+  cols <- c(rev(brewer.pal(n = floor((length(brks)-2)/2),name = "Reds")),
+            "#dddddd",
+            brewer.pal(n = floor((length(brks)-2)/2),name = "Blues"))
   
   png(filename = paste(outDir,"2070MapLandUseAndClimateScenario",scenario,".png",sep=""),
       width = 17.5,height = 8,units = "cm",res = 1200)
   
-  par(mar=c(0.5,0.5,0.5,4))
+  par(mar=c(0.2,0.2,0.2,6.5))
   
-  plot(pred_2070_propn,breaks=brks,col=brewer.pal(n = length(brks),name = "RdYlBu"),
-       xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n")
+  plot(pred_2070_propn,breaks=brks,col=cols,
+       xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",legend=FALSE)
   
   text(-160,30,paste("Average\nintactness\n= ",
                      round(mean(values(pred_2070_propn),na.rm=TRUE)*100,0),"%",sep=""))
+  
+  legend(x = 45,y = 80,
+         legend = c("< 85%","85 - 90%","90 - 95%","95 - 97.5%",
+                    "97.5 - 102.5%",
+                    "102.5 - 105%","105 - 110%","110 - 115%","> 115%"),
+         xpd=TRUE,bty="n",
+         fill=cols)
   
   invisible(dev.off())
   
