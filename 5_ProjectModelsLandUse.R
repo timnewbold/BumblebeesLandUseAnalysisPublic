@@ -19,6 +19,14 @@ load(paste(modelsDir,"TemperatureModels.rd",sep=""))
 
 bombus.ranges <- stack(paste(dataDir,"bombus_0.tif",sep=""))
 
+wgsCRS <- CRS('+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0')
+
+bombus.ranges <- stack(lapply(bombus.ranges@layers,function(sp){
+  crs(sp) <- wgsCRS
+  
+  return(sp)
+}))
+
 pred_bl <- stack(lapply(bombus.ranges@layers,function(sp){
   
   new_ras <- sp
