@@ -63,48 +63,48 @@ invisible(mapply(function(scenario,scenario.label){
     
   },tei_bl@layers,tei_delta@layers))
   
-  pred_bl_conf <- stack(mapply(function(bl,delta){
-    
-    sp <- bl
-    values(sp)[!is.na(values(sp))] <- 1
-    
-    new_ras <- sp
-    
-    df <- data.frame(pres=values(sp))
-    
-    df$LandUse <- factor("Natural",levels=levels(m_full$data$LandUse))
-    df$TEI_BL <- values(bl)
-    df$TEI_delta <- values(delta)
-    
-    df[is.na(df)] <- NA
-    # 
-    #   df$TEI_BL[which(df$TEI_BL < 0.58)] <- NA
-    #   df$TEI_BL[which(df$TEI_BL > 0.74)] <- NA
-    #   df$TEI_delta[which(df$TEI_delta < 0.005)] <- NA
-    #   df$TEI_delta[which(df$TEI_delta > 0.035)] <- NA
-    # 
-    df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
-    df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
-    df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
-    df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
-    
-    df$occur <- 0
-    
-    non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
-    
-    df$pred <- NA
-    df$pred[non.na.row] <- PredictGLMER(model = m_full$model,data = df,se.fit = FALSE)$y
-    
-    df$pred <- 1/(1+exp(-(df$pred)))
-    
-    df$pred <- df$pred * df$pres
-    
-    values(new_ras) <- df$pred
-    
-    return(new_ras)
-    
-  },tei_bl@layers,tei_delta@layers))
-  
+  # pred_bl_conf <- stack(mapply(function(bl,delta){
+  #   
+  #   sp <- bl
+  #   values(sp)[!is.na(values(sp))] <- 1
+  #   
+  #   new_ras <- sp
+  #   
+  #   df <- data.frame(pres=values(sp))
+  #   
+  #   df$LandUse <- factor("Natural",levels=levels(m_full$data$LandUse))
+  #   df$TEI_BL <- values(bl)
+  #   df$TEI_delta <- values(delta)
+  #   
+  #   df[is.na(df)] <- NA
+  #   # 
+  #   #   df$TEI_BL[which(df$TEI_BL < 0.58)] <- NA
+  #   #   df$TEI_BL[which(df$TEI_BL > 0.74)] <- NA
+  #   #   df$TEI_delta[which(df$TEI_delta < 0.005)] <- NA
+  #   #   df$TEI_delta[which(df$TEI_delta > 0.035)] <- NA
+  #   # 
+  #   df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
+  #   df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
+  #   df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
+  #   df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
+  #   
+  #   df$occur <- 0
+  #   
+  #   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
+  #   
+  #   df$pred <- NA
+  #   df$pred[non.na.row] <- PredictGLMER(model = m_full$model,data = df,se.fit = FALSE)$y
+  #   
+  #   df$pred <- 1/(1+exp(-(df$pred)))
+  #   
+  #   df$pred <- df$pred * df$pres
+  #   
+  #   values(new_ras) <- df$pred
+  #   
+  #   return(new_ras)
+  #   
+  # },tei_bl@layers,tei_delta@layers))
+  # 
   ExtractRCP(wDir = RCPDir,zipName = "RCP data.zip",scenario = scenario.label,years = c(2070))
   
   lu_2070 <- get_rcp_grid(wdir = RCPDir,scenario = scenario.label,years = 2070)
@@ -182,74 +182,74 @@ invisible(mapply(function(scenario,scenario.label){
     return(new_ras)
     
   },tei_bl@layers,tei_delta@layers))
-  
-  pred_2070_conf <- stack(mapply(function(bl,delta){
-    
-    sp <- bl
-    values(sp)[!is.na(values(sp))] <- 1
-    
-    new_ras <- sp
-    
-    df <- data.frame(pres=values(sp))
-    
-    df$LandUse <- factor("Natural",levels=levels(m_full$data$LandUse))
-    df$TEI_BL <- values(bl)
-    df$TEI_delta <- values(delta)
-    
-    df[is.na(df)] <- NA
-
-    df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
-    df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
-    df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
-    df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
-    
-    df$occur <- 0
-    
-    non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
-    
-    df$pred <- NA
-    df$pred[non.na.row] <- PredictGLMER(model = m_full$model,data = df,se.fit = FALSE)$y
-    
-    df$pred <- 1/(1+exp(-(df$pred)))
-    
-    df$pred <- df$pred * df$pres
-    
-    values(new_ras) <- df$pred * values(natural_2070)
-    
-    
-    df$LandUse <- factor("Human",levels=levels(m_full$data$LandUse))
-    df$TEI_BL <- values(bl)
-    df$TEI_delta <- values(delta)
-
-    df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
-    df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
-    df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
-    df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
-    
-    df[is.na(df)] <- NA
-    
-    df$occur <- 0
-    
-    non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
-    
-    df$pred <- NA
-    df$pred[non.na.row] <- PredictGLMER(model = m_full$model,data = df,se.fit = FALSE)$y
-    
-    df$pred <- 1/(1+exp(-(df$pred)))
-    
-    df$pred <- df$pred * df$pres
-    
-    values(new_ras) <- values(new_ras) + (df$pred * values(human_2070))
-    
-    return(new_ras)
-    
-  },tei_bl@layers,tei_delta@layers))
-  
+  # 
+  # pred_2070_conf <- stack(mapply(function(bl,delta){
+  #   
+  #   sp <- bl
+  #   values(sp)[!is.na(values(sp))] <- 1
+  #   
+  #   new_ras <- sp
+  #   
+  #   df <- data.frame(pres=values(sp))
+  #   
+  #   df$LandUse <- factor("Natural",levels=levels(m_full$data$LandUse))
+  #   df$TEI_BL <- values(bl)
+  #   df$TEI_delta <- values(delta)
+  #   
+  #   df[is.na(df)] <- NA
+  # 
+  #   df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
+  #   df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
+  #   df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
+  #   df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
+  #   
+  #   df$occur <- 0
+  #   
+  #   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
+  #   
+  #   df$pred <- NA
+  #   df$pred[non.na.row] <- PredictGLMER(model = m_full$model,data = df,se.fit = FALSE)$y
+  #   
+  #   df$pred <- 1/(1+exp(-(df$pred)))
+  #   
+  #   df$pred <- df$pred * df$pres
+  #   
+  #   values(new_ras) <- df$pred * values(natural_2070)
+  #   
+  #   
+  #   df$LandUse <- factor("Human",levels=levels(m_full$data$LandUse))
+  #   df$TEI_BL <- values(bl)
+  #   df$TEI_delta <- values(delta)
+  # 
+  #   df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
+  #   df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
+  #   df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
+  #   df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
+  #   
+  #   df[is.na(df)] <- NA
+  #   
+  #   df$occur <- 0
+  #   
+  #   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
+  #   
+  #   df$pred <- NA
+  #   df$pred[non.na.row] <- PredictGLMER(model = m_full$model,data = df,se.fit = FALSE)$y
+  #   
+  #   df$pred <- 1/(1+exp(-(df$pred)))
+  #   
+  #   df$pred <- df$pred * df$pres
+  #   
+  #   values(new_ras) <- values(new_ras) + (df$pred * values(human_2070))
+  #   
+  #   return(new_ras)
+  #   
+  # },tei_bl@layers,tei_delta@layers))
+  # 
   pred_2070_propn <- sum(pred_2070,na.rm=TRUE)/sum(pred_bl,na.rm=TRUE)
-  pred_2070_propn_conf <- sum(pred_2070_conf,na.rm=TRUE)/sum(pred_bl_conf,na.rm=TRUE)
+  # pred_2070_propn_conf <- sum(pred_2070_conf,na.rm=TRUE)/sum(pred_bl_conf,na.rm=TRUE)
   
   values(pred_2070_propn) <- values(pred_2070_propn) * values(mask)
-  values(pred_2070_propn_conf) <- values(pred_2070_propn_conf) * values(mask)
+  # values(pred_2070_propn_conf) <- values(pred_2070_propn_conf) * values(mask)
   
   brks <- c(0,0.85,0.9,0.95,0.975,1.025,1.05,1.1,1.15,9e99)
   brks[length(brks)] <- max(1.151,max(values(pred_2070_propn),na.rm=TRUE))
@@ -263,10 +263,10 @@ invisible(mapply(function(scenario,scenario.label){
   
   par(mar=c(0.2,0.2,0.2,6.5))
   
-  plot(pred_2070_propn,breaks=brks,col=paste(cols,"55",sep=""),
+  plot(pred_2070_propn,breaks=brks,col=paste(cols,sep=""),
        xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",legend=FALSE)
-  plot(pred_2070_propn_conf,breaks=brks,col=cols,add=TRUE,
-       xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",legend=FALSE)
+  # plot(pred_2070_propn_conf,breaks=brks,col=cols,add=TRUE,
+  #      xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",legend=FALSE)
   
   text(-160,30,paste("Average\nintactness\n= ",
                      round(mean(values(pred_2070_propn),na.rm=TRUE)*100,0),"%",sep=""))
