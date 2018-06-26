@@ -6,16 +6,16 @@ outDir <- "4_PlotSpeciesLevelModels/"
 
 load(paste(inDir,"TemperatureModels.rd",sep=""))
 
-png(paste(outDir,"LandUse.png",sep=""),
-    width = 8.5,height = 8.5,units = "cm",res = 1200)
+tiff(paste(outDir,"LandUse.tif",sep=""),
+    width = 8.5,height = 8.5,units = "cm",res = 300,compression = "lzw")
 
 PlotGLMERFactor(model = m_lu$model,data = m_lu$data,responseVar = "P. occur",
                 logLink = "b",catEffects = "LandUse",seMultiplier = 1.96)
 
 invisible(dev.off())
 
-png(paste(outDir,"TemperatureResultsInteraction.png",sep=""),
-    width = 17.5,height = 5,units = "cm",res = 1200)
+tiff(paste(outDir,"TemperatureResultsInteraction.tif",sep=""),
+    width = 17.5,height = 5,units = "cm",res = 300,compression = "lzw")
 
 ylims <- c(15,270)
 

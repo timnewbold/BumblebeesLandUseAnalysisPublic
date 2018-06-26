@@ -238,8 +238,8 @@ cols <- c(rev(brewer.pal(n = floor((length(brks)-2)/2),name = "Reds")),
           "#dddddd",
           brewer.pal(n = floor((length(brks)-2)/2),name = "Blues"))
 
-png(filename = paste(outDir,"2005MapLandUseAndClimate.png",sep=""),
-    width = 17.5,height = 8,units = "cm",res = 1200)
+tiff(filename = paste(outDir,"2005MapLandUseAndClimate.tif",sep=""),
+    width = 17.5,height = 8,units = "cm",res = 300,compression = "lzw")
 
 par(mar=c(0.2,0.2,0.2,6.5))
 
