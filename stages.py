@@ -44,4 +44,6 @@ STAGES = [ ('1', R,              '1_PrepareMapData.R'),
            ('13', R,             '13_ProjectModelsLandUseAndClimateNoClimateChangeFuture.R'),
            ('14', R,             '14_CompareProjectionsFuture.R'),
            ('15', R,             '15_PlotSites.R'),
+           ('16', R,             '16_ReferencesPreprocess.R'),
+           ('17', python,        '17_ProcessEndnote.py'),
          ]

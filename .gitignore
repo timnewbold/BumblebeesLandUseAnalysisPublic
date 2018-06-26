@@ -13,6 +13,8 @@
 12_ProjectModelsLandUseAndClimateFuture
 14_CompareProjectionsFuture
 15_PlotSites
+16_ReferencesPreprocess
+17_ProcessEndnote
 X_RunSpeciesLevelModels.R
 X_PrepareSiteData.R
 X_RunModels.R
