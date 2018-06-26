@@ -7,6 +7,9 @@ outDir <- "15_PlotSites/"
 
 load(paste0(divDir,"diversity_data.rd"))
 
+sample_years <- as.integer(sub("-[0-9]{2}-[0-9]{2}","",diversity$Sample_end_latest))
+cat(paste0("Records collected between ",min(sample_years)," and ",max(sample_years)))
+
 sites <- diversity[,c('SSBS','LandUse','Longitude','Latitude')]
 
 sites <- unique(sites)

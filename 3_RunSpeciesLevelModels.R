@@ -29,7 +29,7 @@ cat('Temperature models - climate\n')
 
 m_clim <- GLMER(modelData = modelData,responseVar = "occur",
                 fitFamily = "binomial",
-                fixedStruct = "poly(TEI_BL,2)+poly(TEI_delta,2)",
+                fixedStruct = "poly(TEI_BL,2)+poly(TEI_delta,2)+poly(TEI_BL,2):poly(TEI_delta,2)",
                 randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
 
 cat('Temperature models - combined\n')
