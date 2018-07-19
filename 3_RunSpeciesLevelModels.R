@@ -8,7 +8,7 @@ load(paste(inDir,"diversity_data.Rd",sep=""))
 
 modelData <- diversity[,c('occur','LandUse','TEI_BL',
                           'TEI_delta','SS','SSBS',
-                          'Taxon_name_entered')]
+                          'Taxon_name_entered','Longitude','Latitude')]
 modelData <- na.omit(modelData)
 
 cat('Temperature models - null\n')
@@ -39,7 +39,22 @@ m_full <- GLMER(modelData = modelData,responseVar = "occur",
                 fixedStruct = "LandUse+poly(TEI_BL,2)+poly(TEI_delta,2)+LandUse:poly(TEI_BL,2)+LandUse:poly(TEI_delta,2)+LandUse:poly(TEI_BL,2):poly(TEI_delta,2)",
                 randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
 
-print(AIC(m_null$model,m_lu$model,m_clim$model,m_full$model))
+m_spat <- glmer(formula = occur~LandUse+
+                  poly(Longitude,3)+poly(Latitude,3)+
+                  LandUse:poly(Longitude,3)+LandUse:poly(Latitude,3)+
+                  LandUse:poly(Longitude,3):poly(Latitude,3)+
+                  (1|SS)+(1|SSBS)+(1|Taxon_name_entered),
+                data = modelData,family = "binomial")
+
+m_spat <- GLMER(modelData = modelData,responseVar = "occur",
+                fitFamily = "binomial",
+                fixedStruct = "LandUse+
+                poly(Longitude,3)+poly(Latitude,3)+
+                LandUse:poly(Longitude,3)+LandUse:poly(Latitude,3)+
+                LandUse:poly(Longitude,3):poly(Latitude,3)",
+                randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
+
+print(AIC(m_null$model,m_lu$model,m_clim$model,m_full$model,m_spat))
 
 save(m_null,m_lu,m_clim,m_full,file = paste(outDir,"TemperatureModels.rd",sep=""))
 
