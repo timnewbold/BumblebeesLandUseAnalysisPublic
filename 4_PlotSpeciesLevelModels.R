@@ -36,7 +36,7 @@ nd <- data.frame(
   TEI_BL=quantile(m_full$data$TEI_BL,0.1),
   row.names = NULL)
 
-preds.LowTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
+preds.LowTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1.96)
 preds.LowTEI.LUNatural <- 1/(1+exp(-preds.LowTEI.LUNatural))
 # 
 # plot(xVals,preds.LowTEI.LUNatural$y,type="l",ylim=c(0,1),col="#1b9e77",xlab="Delta TEI",ylab="P. occur",main="Low Baseline TEI")
@@ -51,7 +51,7 @@ nd <- data.frame(
   TEI_BL=quantile(m_full$data$TEI_BL,0.1),
   row.names = NULL)
 
-preds.LowTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
+preds.LowTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1.96)
 preds.LowTEI.LUHuman <- 1/(1+exp(-preds.LowTEI.LUHuman))
 # 
 # points(xVals,preds.LowTEI.LUHuman$y,type="l",ylim=c(0,1),col="#d95f02")
@@ -78,7 +78,7 @@ nd <- data.frame(
   TEI_BL=quantile(m_full$data$TEI_BL,0.5),
   row.names = NULL)
 
-preds.MedTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
+preds.MedTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1.96)
 preds.MedTEI.LUNatural <- 1/(1+exp(-preds.MedTEI.LUNatural))
 # 
 # plot(xVals,preds.MedTEI.LUNatural$y,type="l",ylim=c(0,1),col="#1b9e77",xlab="Delta TEI",ylab="P. occur",main="Median Baseline TEI")
@@ -93,7 +93,7 @@ nd <- data.frame(
   TEI_BL=quantile(m_full$data$TEI_BL,0.5),
   row.names = NULL)
 
-preds.MedTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
+preds.MedTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1.96)
 preds.MedTEI.LUHuman <- 1/(1+exp(-preds.MedTEI.LUHuman))
 # 
 # points(xVals,preds.MedTEI.LUHuman$y,type="l",ylim=c(0,1),col="#d95f02")
@@ -121,7 +121,7 @@ nd <- data.frame(
   TEI_BL=quantile(m_full$data$TEI_BL,0.9),
   row.names = NULL)
 
-preds.HighTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
+preds.HighTEI.LUNatural <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1.96)
 preds.HighTEI.LUNatural <- 1/(1+exp(-preds.HighTEI.LUNatural))
 # 
 # plot(xVals,preds.HighTEI.LUNatural$y,type="l",ylim=c(0,1),col="#1b9e77",xlab="Delta TEI",ylab="P. occur",main="High Baseline TEI")
@@ -136,7 +136,7 @@ nd <- data.frame(
   TEI_BL=quantile(m_full$data$TEI_BL,0.9),
   row.names = NULL)
 
-preds.HighTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1)
+preds.HighTEI.LUHuman <- PredictGLMER(model = m_full$model,data = nd,se.fit = TRUE,seMultiplier = 1.96)
 preds.HighTEI.LUHuman <- 1/(1+exp(-preds.HighTEI.LUHuman))
 # 
 # points(xVals,preds.HighTEI.LUHuman$y,type="l",ylim=c(0,1),col="#d95f02")
