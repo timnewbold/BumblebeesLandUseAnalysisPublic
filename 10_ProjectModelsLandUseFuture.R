@@ -70,6 +70,9 @@ invisible(mapply(function(scenario,scenario.label){
   mask <- natural_2070 + human_2070
   values(mask)[!is.na(values(mask))] <- 1
   
+  un_sub <- raster(paste0(dataDir,"un_subregions"))
+  values(mask)[!(values(un_sub) %in% c(21,39,154,155))] <- NA
+  
   pred_2070 <- stack(lapply(bombus.ranges@layers,function(sp){
     
     new_ras <- sp
@@ -106,7 +109,7 @@ invisible(mapply(function(scenario,scenario.label){
   
   values(pred_2070_propn) <- values(pred_2070_propn) * values(mask)
   
-  brks <- c(0,0.85,0.9,0.95,0.975,1.025,1.05,1.1,1.15,9e99)
+  brks <- c(0,0.5,0.75,0.95,0.975,1.025,1.05,1.25,1.5,9e99)
   brks[length(brks)] <- max(1.151,max(values(pred_2070_propn),na.rm=TRUE))
   brks[1] <- min(0.849,min(values(pred_2070_propn),na.rm=TRUE))
   cols <- c(rev(brewer.pal(n = floor((length(brks)-2)/2),name = "Reds")),
@@ -125,9 +128,9 @@ invisible(mapply(function(scenario,scenario.label){
                      round(mean(values(pred_2070_propn),na.rm=TRUE)*100,0),"%",sep=""))
   
   legend(x = 45,y = 80,
-         legend = c("< 85%","85 - 90%","90 - 95%","95 - 97.5%",
+         legend = c("< 50%","50 - 75%","75 - 95%","95 - 97.5%",
                     "97.5 - 102.5%",
-                    "102.5 - 105%","105 - 110%","110 - 115%","> 115%"),
+                    "102.5 - 105%","105 - 125%","125 - 150%","> 150%"),
          xpd=TRUE,bty="n",
          fill=cols)
   

@@ -224,14 +224,24 @@ pred_2005_conf <- stack(mapply(function(bl,delta){
   
 },tei_bl@layers,tei_delta@layers))
 
+pred_bl_rich <- sum(pred_bl,na.rm=TRUE)*mask
+pred_bl_conf_rich <- sum(pred_bl_conf,na.rm=TRUE)*mask
 
-pred_2005_propn <- sum(pred_2005,na.rm=TRUE)/sum(pred_bl,na.rm=TRUE)
-pred_2005_propn_conf <- sum(pred_2005_conf,na.rm=TRUE)/sum(pred_bl_conf,na.rm=TRUE)
+maskCells <- which(values(pred_bl_rich)<1)
+
+pred_bl_rich[maskCells] <- NA
+pred_bl_conf_rich[maskCells] <- NA
+
+pred_2005_rich <- sum(pred_2005,na.rm=TRUE)*mask
+pred_2005_conf_rich <- sum(pred_2005_conf,na.rm=TRUE)*mask
+
+pred_2005_propn <- pred_2005_rich/pred_bl_rich
+pred_2005_propn_conf <- pred_2005_conf_rich/pred_bl_conf_rich
 
 values(pred_2005_propn) <- values(pred_2005_propn) * values(mask)
 values(pred_2005_propn_conf) <- values(pred_2005_propn_conf) * values(mask)
 
-brks <- c(0,0.85,0.9,0.95,0.975,1.025,1.05,1.1,1.15,9e99)
+brks <- c(0,0.5,0.75,0.95,0.975,1.025,1.05,1.25,1.5,9e99)
 brks[length(brks)] <- max(1.151,max(values(pred_2005_propn),na.rm=TRUE))
 brks[1] <- min(0.849,min(values(pred_2005_propn),na.rm=TRUE))
 cols <- c(rev(brewer.pal(n = floor((length(brks)-2)/2),name = "Reds")),
@@ -243,7 +253,9 @@ tiff(filename = paste(outDir,"2005MapLandUseAndClimate.tif",sep=""),
 
 par(mar=c(0.2,0.2,0.2,6.5))
 
-plot(pred_2005_propn,breaks=brks,col=paste(cols,"55",sep=""),
+plot(mask,col="#dddddd",xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",legend=FALSE)
+
+plot(pred_2005_propn,breaks=brks,col=paste(cols,"55",sep=""),add=TRUE,
      xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",legend=FALSE)
 
 plot(pred_2005_propn_conf,breaks=brks,col=cols,add=TRUE,
@@ -253,9 +265,9 @@ text(-160,30,paste("Average\nintactness\n= ",
                    round(mean(values(pred_2005_propn),na.rm=TRUE)*100,0),"%",sep=""))
 
 legend(x = 45,y = 80,
-       legend = c("< 85%","85 - 90%","90 - 95%","95 - 97.5%",
+       legend = c("< 50%","50 - 75%","75 - 95%","95 - 97.5%",
                   "97.5 - 102.5%",
-                  "102.5 - 105%","105 - 110%","110 - 115%","> 115%"),
+                  "102.5 - 105%","105 - 125%","125 - 150%","> 150%"),
        xpd=TRUE,bty="n",
        fill=cols)
 
