@@ -6,23 +6,30 @@ outDir <- "4_PlotSpeciesLevelModels/"
 
 load(paste(inDir,"TemperatureModels.rd",sep=""))
 
+xlab <- "Thermal position change"
+ylab <- "Relative occurrence prob. (%)"
+
 tiff(paste(outDir,"LandUse.tif",sep=""),
     width = 8.5,height = 8.5,units = "cm",res = 300,compression = "lzw")
 
-PlotGLMERFactor(model = m_lu$model,data = m_lu$data,responseVar = "P. occur",
+PlotGLMERFactor(model = m_lu$model,data = m_lu$data,responseVar = "",
                 logLink = "b",catEffects = "LandUse",seMultiplier = 1.96)
+title(ylab=ylab)
 
 invisible(dev.off())
 
-tiff(paste(outDir,"TemperatureResultsInteraction.tif",sep=""),
-    width = 17.5,height = 5,units = "cm",res = 300,compression = "lzw")
+cr <- colorRampPalette(colors = c("#0000ff","#ff0000"))
 
-ylims <- c(15,270)
+tiff(paste(outDir,"TemperatureResultsInteraction.tif",sep=""),
+    width = 17.5,height = 7.5,units = "cm",res = 300,compression = "lzw")
+
+ylims <- c(-100,180)
 
 par(mfrow=c(1,3))
 par(tck=-0.01)
 par(mgp=c(1.4,0.2,0))
-par(mar=c(2.6,2.6,1,0.2))
+par(mar=c(6.6,2.6,1,0.2))
+par(las=1)
 
 xVals <- seq(
   from=quantile(m_full$data$TEI_delta,0.025),
@@ -58,13 +65,29 @@ preds.LowTEI.LUHuman <- 1/(1+exp(-preds.LowTEI.LUHuman))
 # points(xVals,preds.LowTEI.LUHuman$yplus,type="l",lty=2,col="#d95f02")
 # points(xVals,preds.LowTEI.LUHuman$yminus,type="l",lty=2,col="#d95f02")
 
-preds.LowTEI.LUHumanRel <- preds.LowTEI.LUHuman/preds.LowTEI.LUNatural$y
+preds.LowTEI.LUHumanRel <- ((preds.LowTEI.LUHuman/preds.LowTEI.LUNatural$y)*100)-100
 
-plot(xVals,preds.LowTEI.LUHumanRel$y*100,type="l",ylim=ylims,col="#d95f02",xlab="Delta TEI",ylab="P. occur",main="Low Baseline TEI")
-points(xVals,preds.LowTEI.LUHumanRel$yplus*100,type="l",lty=2,col="#d95f02")
-points(xVals,preds.LowTEI.LUHumanRel$yminus*100,type="l",lty=2,col="#d95f02")
+plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=ylab,main="Near lower thermal limit",col.main=cr(300)[1])
+invisible(sapply(X = 1:(length(xVals)-1),FUN = function(i) {
+  points(c(xVals[i],xVals[i+1]),c(
+    preds.LowTEI.LUHumanRel$y[i],preds.LowTEI.LUHumanRel$y[i+1]),
+    type="l",col=cr(300)[i])
+  }
+))
+invisible(sapply(X = seq(from=1,to=length(xVals-1),by=2),FUN = function(i) {
+  points(c(xVals[i],xVals[i+1]),c(
+    preds.LowTEI.LUHumanRel$yplus[i],preds.LowTEI.LUHumanRel$yplus[i+1]),
+    type="l",col=cr(300)[i],lty=2)
+}
+))
+invisible(sapply(X = seq(from=1,to=length(xVals-1),by=2),FUN = function(i) {
+  points(c(xVals[i],xVals[i+1]),c(
+    preds.LowTEI.LUHumanRel$yminus[i],preds.LowTEI.LUHumanRel$yminus[i+1]),
+    type="l",col=cr(300)[i],lty=2)
+}
+))
 
-abline(h=100,lty=2,col="#999999")
+abline(h=0,lty=2,col="#999999")
 
 xVals <- seq(
   from=quantile(m_full$data$TEI_delta,0.025),
@@ -100,14 +123,34 @@ preds.MedTEI.LUHuman <- 1/(1+exp(-preds.MedTEI.LUHuman))
 # points(xVals,preds.MedTEI.LUHuman$yplus,type="l",lty=2,col="#d95f02")
 # points(xVals,preds.MedTEI.LUHuman$yminus,type="l",lty=2,col="#d95f02")
 
-preds.MedTEI.LUHumanRel <- preds.MedTEI.LUHuman/preds.MedTEI.LUNatural$y
+preds.MedTEI.LUHumanRel <- ((preds.MedTEI.LUHuman/preds.MedTEI.LUNatural$y)*100)-100
 
-plot(xVals,preds.MedTEI.LUHumanRel$y*100,type="l",ylim=ylims,col="#d95f02",
-     xlab="Delta TEI",ylab="P. occur",main="Median Baseline TEI")
-points(xVals,preds.MedTEI.LUHumanRel$yplus*100,type="l",lty=2,col="#d95f02")
-points(xVals,preds.MedTEI.LUHumanRel$yminus*100,type="l",lty=2,col="#d95f02")
+plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=ylab,main="Middle of thermal range",col.main=cr(300)[150])
+invisible(sapply(X = 1:(length(xVals)-1),FUN = function(i) {
+  points(c(xVals[i],xVals[i+1]),c(
+    preds.MedTEI.LUHumanRel$y[i],preds.MedTEI.LUHumanRel$y[i+1]),
+    type="l",col=cr(300)[i+100])
+}
+))
+invisible(sapply(X = seq(from=1,to=length(xVals-1),by=2),FUN = function(i) {
+  points(c(xVals[i],xVals[i+1]),c(
+    preds.MedTEI.LUHumanRel$yplus[i],preds.MedTEI.LUHumanRel$yplus[i+1]),
+    type="l",col=cr(300)[i+100],lty=2)
+}
+))
+invisible(sapply(X = seq(from=1,to=length(xVals-1),by=2),FUN = function(i) {
+  points(c(xVals[i],xVals[i+1]),c(
+    preds.MedTEI.LUHumanRel$yminus[i],preds.MedTEI.LUHumanRel$yminus[i+1]),
+    type="l",col=cr(300)[i+100],lty=2)
+}
+))
 
-abline(h=100,lty=2,col="#999999")
+abline(h=0,lty=2,col="#999999")
+
+arr.x <- seq(from=0.01,to=0.032,length.out=100)
+invisible(sapply(X = 1:98,FUN = function(i) segments(x0 = arr.x[i],y0 = -185,x1 = arr.x[i+1],y1 = -185,xpd=TRUE,col=cr(100)[i])))
+arrows(x0 = arr.x[99],y0 = -185,x1 = arr.x[100],y1 = -185,xpd=TRUE,col=cr(100)[99])
+text(x = 0.021,y = -210,labels = "Change toward \nupper limit",xpd=TRUE)
 
 xVals <- seq(
   from=quantile(m_full$data$TEI_delta,0.025),
@@ -144,13 +187,28 @@ preds.HighTEI.LUHuman <- 1/(1+exp(-preds.HighTEI.LUHuman))
 # points(xVals,preds.HighTEI.LUHuman$yminus,type="l",lty=2,col="#d95f02")
 
 
-preds.HighTEI.LUHumanRel <- preds.HighTEI.LUHuman/preds.HighTEI.LUNatural$y
+preds.HighTEI.LUHumanRel <- ((preds.HighTEI.LUHuman/preds.HighTEI.LUNatural$y)*100)-100
 
-plot(xVals,preds.HighTEI.LUHumanRel$y*100,type="l",ylim=ylims,col="#d95f02",
-     xlab="Delta TEI",ylab="P. occur",main="High Baseline TEI")
-points(xVals,preds.HighTEI.LUHumanRel$yplus*100,type="l",lty=2,col="#d95f02")
-points(xVals,preds.HighTEI.LUHumanRel$yminus*100,type="l",lty=2,col="#d95f02")
+plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=ylab,main="Near upper thermal limit",col.main=cr(300)[300])
+invisible(sapply(X = 1:(length(xVals)-1),FUN = function(i) {
+  points(c(xVals[i],xVals[i+1]),c(
+    preds.HighTEI.LUHumanRel$y[i],preds.HighTEI.LUHumanRel$y[i+1]),
+    type="l",col=cr(300)[i+200])
+}
+))
+invisible(sapply(X = seq(from=1,to=length(xVals-1),by=2),FUN = function(i) {
+  points(c(xVals[i],xVals[i+1]),c(
+    preds.HighTEI.LUHumanRel$yplus[i],preds.HighTEI.LUHumanRel$yplus[i+1]),
+    type="l",col=cr(300)[i+200],lty=2)
+}
+))
+invisible(sapply(X = seq(from=1,to=length(xVals-1),by=2),FUN = function(i) {
+  points(c(xVals[i],xVals[i+1]),c(
+    preds.HighTEI.LUHumanRel$yminus[i],preds.HighTEI.LUHumanRel$yminus[i+1]),
+    type="l",col=cr(300)[i+200],lty=2)
+}
+))
 
-abline(h=100,lty=2,col="#999999")
+abline(h=0,lty=2,col="#999999")
 
 invisible(dev.off())
