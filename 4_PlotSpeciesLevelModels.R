@@ -21,14 +21,18 @@ invisible(dev.off())
 cr <- colorRampPalette(colors = c("#0000ff","#ff0000"))
 
 tiff(paste(outDir,"TemperatureResultsInteraction.tif",sep=""),
-    width = 17.5,height = 7.5,units = "cm",res = 300,compression = "lzw")
+    width = 17.5,height = 6,units = "cm",res = 300,compression = "lzw")
 
 ylims <- c(-100,180)
 
-par(mfrow=c(1,3))
+layout.mat <- matrix(data = 1:3,nrow = 1,ncol = 3,byrow = TRUE)
+layout(mat = layout.mat,widths = c(5.5,5.5,6.5),heights = 6)
+
+# par(mfrow=c(1,3))
 par(tck=-0.01)
-par(mgp=c(1.4,0.2,0))
-par(mar=c(6.6,2.6,1,0.2))
+par(mgp=c(1.6,0.2,0))
+par(mai=c(0.792,0.343,0.132,0.0264))
+print(par("mai"))
 par(las=1)
 
 xVals <- seq(
@@ -125,7 +129,7 @@ preds.MedTEI.LUHuman <- 1/(1+exp(-preds.MedTEI.LUHuman))
 
 preds.MedTEI.LUHumanRel <- ((preds.MedTEI.LUHuman/preds.MedTEI.LUNatural$y)*100)-100
 
-plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=ylab,main="Middle of thermal range",col.main=cr(300)[150])
+plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=NA,main="Middle of thermal range",col.main=cr(300)[150])
 invisible(sapply(X = 1:(length(xVals)-1),FUN = function(i) {
   points(c(xVals[i],xVals[i+1]),c(
     preds.MedTEI.LUHumanRel$y[i],preds.MedTEI.LUHumanRel$y[i+1]),
@@ -148,9 +152,10 @@ invisible(sapply(X = seq(from=1,to=length(xVals-1),by=2),FUN = function(i) {
 abline(h=0,lty=2,col="#999999")
 
 arr.x <- seq(from=0.01,to=0.032,length.out=100)
-invisible(sapply(X = 1:98,FUN = function(i) segments(x0 = arr.x[i],y0 = -185,x1 = arr.x[i+1],y1 = -185,xpd=TRUE,col=cr(100)[i])))
-arrows(x0 = arr.x[99],y0 = -185,x1 = arr.x[100],y1 = -185,xpd=TRUE,col=cr(100)[99])
-text(x = 0.021,y = -210,labels = "Change toward \nupper limit",xpd=TRUE)
+invisible(sapply(X = 1:98,FUN = function(i) segments(x0 = arr.x[i],y0 = -195,x1 = arr.x[i+1],y1 = -195,xpd=TRUE,col=cr(100)[i])))
+arrows(x0 = arr.x[99],y0 = -195,x1 = arr.x[100],y1 = -195,xpd=TRUE,col=cr(100)[99],angle = 20,length = 0.1)
+text(x = 0.009,y = -230,labels = "Stable\nclimate",xpd=TRUE,pos=4)
+text(x = 0.033,y = -230,labels = "Rapidly warming\nclimate",xpd=TRUE,pos=2)
 
 xVals <- seq(
   from=quantile(m_full$data$TEI_delta,0.025),
@@ -189,7 +194,9 @@ preds.HighTEI.LUHuman <- 1/(1+exp(-preds.HighTEI.LUHuman))
 
 preds.HighTEI.LUHumanRel <- ((preds.HighTEI.LUHuman/preds.HighTEI.LUNatural$y)*100)-100
 
-plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=ylab,main="Near upper thermal limit",col.main=cr(300)[300])
+par(mai=c(0.792,0.343,0.132,0.42))
+
+plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=NA,main="Near upper thermal limit",col.main=cr(300)[300])
 invisible(sapply(X = 1:(length(xVals)-1),FUN = function(i) {
   points(c(xVals[i],xVals[i+1]),c(
     preds.HighTEI.LUHumanRel$y[i],preds.HighTEI.LUHumanRel$y[i+1]),
@@ -210,5 +217,10 @@ invisible(sapply(X = seq(from=1,to=length(xVals-1),by=2),FUN = function(i) {
 ))
 
 abline(h=0,lty=2,col="#999999")
+
+arrows(x0 = 0.035,y0 = 20,x1 = 0.035,y1 = 170,xpd=TRUE,angle=20,length=0.1)
+text(x = 0.037,y = 95,labels = "Human land \nuse better",srt=90,xpd=TRUE)
+arrows(x0 = 0.035,y0 = -20,x1 = 0.035,y1 = -120,xpd=TRUE,angle=20,length=0.1)
+text(x = 0.037,y = -70,labels = "Human land \nuse worse",srt=90,xpd=TRUE)
 
 invisible(dev.off())
