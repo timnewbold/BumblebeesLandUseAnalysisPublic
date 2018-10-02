@@ -101,5 +101,9 @@ diversity$LandUse <- factor(diversity$LandUse,levels=c("Natural","Human"))
 
 diversity$occur <- ifelse(diversity$Measurement>0,1,0)
 
+elev <- raster(paste0(dataDir,"alt"))
+
+diversity$Elevation <- raster::extract(x = elev,y = diversity[,c('Longitude','Latitude')])
+
 cat('Saving diversity data\n')
 save(diversity,file=paste(outDir,"diversity_data.Rd",sep=""))
