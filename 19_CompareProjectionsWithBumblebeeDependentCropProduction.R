@@ -11,19 +11,21 @@ proj2070 <- readRDS(paste0(futureProjDir,"2070MapLandUseAndClimateScenario85.rds
 
 cropProd <- raster(paste0(cropProdDir,"ProductionMap.tif"))
 
+cropProd <- cropProd/(area(cropProd)*100)
+
 projData <- data.frame(proj2005=values(proj2005),
                        proj2070=values(proj2070),
                        cropProd=values(cropProd))
 projData$cropProd[is.na(projData$cropProd)] <- 0
 
-projData$cropProdCut <- cut(x = projData$cropProd,breaks=c(-1,0,500,5000,50000,500000))
+projData$cropProdCut <- cut(x = projData$cropProd,breaks=c(-1,0,0.001,0.01,0.1,2.26))
 
 ylims <- c(0,180)
 
-tiff(filename = paste0(
-  outDir,"BumblebeeRichnessChangeVersusCropProduction.tif"),
+png(filename = paste0(
+  outDir,"BumblebeeRichnessChangeVersusCropProduction.png"),
   width = 12.5,height = 10,units = "cm",
-  compression = "lzw",res = 1200)
+  res = 1200)
 
 par(las=1)
 par(tck=-0.01)
@@ -38,8 +40,8 @@ bCurr <- boxplot((projData$proj2005*100)~projData$cropProdCut,outline=FALSE,rang
 bFuture <- boxplot((projData$proj2070*100)~projData$cropProdCut,outline=FALSE,
         range=1,xaxt="n",ylim=ylims,add=TRUE,at=(1:length(levels(projData$cropProdCut)))+0.2,
         boxwex=0.25,col="#d95f02")
-axis(side = 1,at = 1:5,labels=c("0","0 - 0.5","0.5 - 5","5 - 50","> 50"))
-title(xlab="Bumblebee dependent crop production (thousand tons)")
+axis(side = 1,at = 1:5,labels=c("0","0 - 1","1 - 10","10 - 100","> 100"))
+title(xlab="Bumblebee dependent crop production (kg per ha)")
 abline(h=100,lty=2,col="#666666")
 
 legend(0.8,180,c("2005","2070"),fill=c("#7570b3","#d95f02"),bty="n")

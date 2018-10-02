@@ -71,7 +71,7 @@ preds.LowTEI.LUHuman <- 1/(1+exp(-preds.LowTEI.LUHuman))
 
 preds.LowTEI.LUHumanRel <- ((preds.LowTEI.LUHuman/preds.LowTEI.LUNatural$y)*100)-100
 
-plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=ylab,main="Near lower thermal limit",col.main=cr(300)[1])
+plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=ylab,main="Toward lower thermal limit",col.main=cr(300)[1])
 invisible(sapply(X = 1:(length(xVals)-1),FUN = function(i) {
   points(c(xVals[i],xVals[i+1]),c(
     preds.LowTEI.LUHumanRel$y[i],preds.LowTEI.LUHumanRel$y[i+1]),
@@ -196,7 +196,7 @@ preds.HighTEI.LUHumanRel <- ((preds.HighTEI.LUHuman/preds.HighTEI.LUNatural$y)*1
 
 par(mai=c(0.792,0.343,0.132,0.42))
 
-plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=NA,main="Near upper thermal limit",col.main=cr(300)[300])
+plot(xVals,rep(-9e99,length(xVals)),ylim=ylims,xlab=xlab,ylab=NA,main="Toward upper thermal limit",col.main=cr(300)[300])
 invisible(sapply(X = 1:(length(xVals)-1),FUN = function(i) {
   points(c(xVals[i],xVals[i+1]),c(
     preds.HighTEI.LUHumanRel$y[i],preds.HighTEI.LUHumanRel$y[i+1]),
