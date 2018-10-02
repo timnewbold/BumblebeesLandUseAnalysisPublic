@@ -41,7 +41,7 @@ bFuture <- boxplot((projData$proj2070*100)~projData$cropProdCut,outline=FALSE,
         range=1,xaxt="n",ylim=ylims,add=TRUE,at=(1:length(levels(projData$cropProdCut)))+0.2,
         boxwex=0.25,col="#d95f02")
 axis(side = 1,at = 1:5,labels=c("0","0 - 1","1 - 10","10 - 100","> 100"))
-title(xlab="Bumblebee dependent crop production (kg per ha)")
+title(xlab="Bumblebee dependent production (kg per ha cell)")
 abline(h=100,lty=2,col="#666666")
 
 legend(0.8,180,c("2005","2070"),fill=c("#7570b3","#d95f02"),bty="n")
