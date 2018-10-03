@@ -38,6 +38,7 @@ pred_bl <- stack(mapply(function(bl,delta){
   
   df[is.na(df)] <- NA
 
+  df$LogElevation <- median(m_full$data$LogElevation)
   df$occur <- 0
   
   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
@@ -75,11 +76,12 @@ pred_bl_conf <- stack(mapply(function(bl,delta){
     # df$TEI_delta[which(df$TEI_delta < 0.005)] <- NA
     # df$TEI_delta[which(df$TEI_delta > 0.035)] <- NA
   
-    df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
-    df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
-    df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
-    df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
-  
+  df$TEI_BL[which(df$TEI_BL < 0.5)] <- NA
+  df$TEI_BL[which(df$TEI_BL > 0.8)] <- NA
+  df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
+  df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
+
+  df$LogElevation <- median(m_full$data$LogElevation)
   df$occur <- 0
   
   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
@@ -125,6 +127,7 @@ pred_2005 <- stack(mapply(function(bl,delta){
   
   df[is.na(df)] <- NA
   
+  df$LogElevation <- median(m_full$data$LogElevation)
   df$occur <- 0
   
   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
@@ -145,6 +148,7 @@ pred_2005 <- stack(mapply(function(bl,delta){
   
   df[is.na(df)] <- NA
   
+  df$LogElevation <- median(m_full$data$LogElevation)
   df$occur <- 0
   
   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
@@ -182,6 +186,7 @@ pred_2005_conf <- stack(mapply(function(bl,delta){
   df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
   df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
 
+  df$LogElevation <- median(m_full$data$LogElevation)
   df$occur <- 0
   
   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
@@ -207,6 +212,7 @@ pred_2005_conf <- stack(mapply(function(bl,delta){
 
   df[is.na(df)] <- NA
   
+  df$LogElevation <- median(m_full$data$LogElevation)
   df$occur <- 0
   
   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))

@@ -46,6 +46,7 @@ invisible(mapply(function(scenario,scenario.label){
     
     df[is.na(df)] <- NA
     
+    df$LogElevation <- median(m_full$data$LogElevation)
     df$occur <- 0
     
     non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
@@ -138,6 +139,7 @@ invisible(mapply(function(scenario,scenario.label){
     #   df$TEI_delta[which(df$TEI_delta < -0.01)] <- NA
     #   df$TEI_delta[which(df$TEI_delta > 0.04)] <- NA
     
+    df$LogElevation <- median(m_full$data$LogElevation)
     df$occur <- 0
     
     non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
@@ -163,6 +165,7 @@ invisible(mapply(function(scenario,scenario.label){
     
     df[is.na(df)] <- NA
     
+    df$LogElevation <- median(m_full$data$LogElevation)
     df$occur <- 0
     
     non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))

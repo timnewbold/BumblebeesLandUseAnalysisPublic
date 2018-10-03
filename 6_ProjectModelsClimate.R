@@ -33,6 +33,7 @@ pred_bl <- stack(mapply(function(bl,delta){
   # 
   df[is.na(df)] <- NA
 
+  df$LogElevation <- median(m_clim$data$LogElevation)
   df$occur <- 0
   
   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))
@@ -69,6 +70,7 @@ pred_2005 <- stack(mapply(function(bl,delta){
   # 
   df[is.na(df)] <- NA
   
+  df$LogElevation <- median(m_clim$data$LogElevation)
   df$occur <- 0
   
   non.na.row <- which(apply(df,1,function(r) all(!is.na(r))))

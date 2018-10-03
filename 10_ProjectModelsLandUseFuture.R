@@ -37,6 +37,7 @@ pred_bl <- stack(lapply(bombus.ranges@layers,function(sp){
   df <- data.frame(pres=values(sp))
   
   df$LandUse <- factor("Natural",levels=levels(m_lu$data$LandUse))
+  df$LogElevation <- median(m_lu$data$LogElevation)
   df$occur <- 0
   
   df$pred <- PredictGLMER(model = m_lu$model,data = df,se.fit = FALSE)$y
@@ -80,6 +81,7 @@ invisible(mapply(function(scenario,scenario.label){
     df <- data.frame(pres=values(sp))
     
     df$LandUse <- factor("Natural",levels=levels(m_lu$data$LandUse))
+    df$LogElevation <- median(m_lu$data$LogElevation)
     df$occur <- 0
     
     df$pred <- PredictGLMER(model = m_lu$model,data = df,se.fit = FALSE)$y
@@ -91,6 +93,7 @@ invisible(mapply(function(scenario,scenario.label){
     values(new_ras) <- df$pred * values(natural_2070)
     
     df$LandUse <- factor("Human",levels=levels(m_lu$data$LandUse))
+    df$LogElevation <- median(m_lu$data$LogElevation)
     df$occur <- 0
     
     df$pred <- PredictGLMER(model = m_lu$model,data = df,se.fit = FALSE)$y
