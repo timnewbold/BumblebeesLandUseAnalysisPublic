@@ -43,6 +43,7 @@ xVals <- seq(
 nd <- data.frame(
   TEI_delta=xVals,
   occur=0,
+  LogElevation=median(m_full$data$LogElevation),
   LandUse=factor("Natural",levels=levels(m_full$data$LandUse)),
   TEI_BL=quantile(m_full$data$TEI_BL,0.1),
   row.names = NULL)
@@ -58,6 +59,7 @@ preds.LowTEI.LUNatural <- 1/(1+exp(-preds.LowTEI.LUNatural))
 nd <- data.frame(
   TEI_delta=xVals,
   occur=0,
+  LogElevation=median(m_full$data$LogElevation),
   LandUse=factor("Human",levels=levels(m_full$data$LandUse)),
   TEI_BL=quantile(m_full$data$TEI_BL,0.1),
   row.names = NULL)
@@ -101,6 +103,7 @@ xVals <- seq(
 nd <- data.frame(
   TEI_delta=xVals,
   occur=0,
+  LogElevation=median(m_full$data$LogElevation),
   LandUse=factor("Natural",levels=levels(m_full$data$LandUse)),
   TEI_BL=quantile(m_full$data$TEI_BL,0.5),
   row.names = NULL)
@@ -116,6 +119,7 @@ preds.MedTEI.LUNatural <- 1/(1+exp(-preds.MedTEI.LUNatural))
 nd <- data.frame(
   TEI_delta=xVals,
   occur=0,
+  LogElevation=median(m_full$data$LogElevation),
   LandUse=factor("Human",levels=levels(m_full$data$LandUse)),
   TEI_BL=quantile(m_full$data$TEI_BL,0.5),
   row.names = NULL)
@@ -165,6 +169,7 @@ xVals <- seq(
 nd <- data.frame(
   TEI_delta=xVals,
   occur=0,
+  LogElevation=median(m_full$data$LogElevation),
   LandUse=factor("Natural",levels=levels(m_full$data$LandUse)),
   TEI_BL=quantile(m_full$data$TEI_BL,0.9),
   row.names = NULL)
@@ -180,6 +185,7 @@ preds.HighTEI.LUNatural <- 1/(1+exp(-preds.HighTEI.LUNatural))
 nd <- data.frame(
   TEI_delta=xVals,
   occur=0,
+  LogElevation=median(m_full$data$LogElevation),
   LandUse=factor("Human",levels=levels(m_full$data$LandUse)),
   TEI_BL=quantile(m_full$data$TEI_BL,0.9),
   row.names = NULL)
