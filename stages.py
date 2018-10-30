@@ -49,4 +49,5 @@ STAGES = [ ('1', R,              '1_PrepareMapData.R'),
            ('18', R,             '18_MapBumblebeeDependentCrops.R'),
            ('19', R,             '19_CompareProjectionsWithBumblebeeDependentCropProduction.R'),
            ('20', R,             '20_PrepareRawClimateData.R'),
+           ('21', R,             '21_CompareRawCimateModels.R'),
          ]
