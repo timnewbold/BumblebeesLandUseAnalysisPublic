@@ -48,4 +48,5 @@ STAGES = [ ('1', R,              '1_PrepareMapData.R'),
            ('17', python,        '17_ProcessEndnote.py'),
            ('18', R,             '18_MapBumblebeeDependentCrops.R'),
            ('19', R,             '19_CompareProjectionsWithBumblebeeDependentCropProduction.R'),
+           ('20', R,             '20_PrepareRawClimateData.R'),
          ]

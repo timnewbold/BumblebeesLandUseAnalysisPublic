@@ -1,4 +1,5 @@
 0_data
+ProcessTemporalClimate
 1_PrepareMapData
 2_PrepareDiversityData
 3_RunSpeciesLevelModels
@@ -17,6 +18,7 @@
 17_ProcessEndnote
 18_MapBumblebeeDependentCrops
 19_CompareProjectionsWithBumblebeeDependentCropProduction
+20_PrepareRawClimateData
 X_RunSpeciesLevelModels.R
 X_PrepareSiteData.R
 X_RunModels.R
