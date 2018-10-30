@@ -51,4 +51,5 @@ STAGES = [ ('1', R,              '1_PrepareMapData.R'),
            ('20', R,             '20_PrepareRawClimateData.R'),
            ('21', R,             '21_CompareRawCimateModels.R'),
            ('22', R,             '22_CompareModellingMethodsOptimizers.R'),
+           ('23', R,             '23_ModelsIncludingFertilizerApplication.R'),
          ]
