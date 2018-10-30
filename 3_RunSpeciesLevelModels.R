@@ -18,28 +18,32 @@ cat('Temperature models - null\n')
 m_null <- GLMER(modelData = modelData,responseVar = "occur",
                 fitFamily = "binomial",
                 fixedStruct = "LogElevation",
-                randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
+                randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)",
+                saveVars = c("Longitude","Latitude"))
 
 cat('Temperature models - land use\n')
 
 m_lu <- GLMER(modelData = modelData,responseVar = "occur",
               fitFamily = "binomial",
               fixedStruct = "LandUse+LogElevation",
-              randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
+              randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)",
+              saveVars = c("Longitude","Latitude"))
 
 cat('Temperature models - climate\n')
 
 m_clim <- GLMER(modelData = modelData,responseVar = "occur",
                 fitFamily = "binomial",
                 fixedStruct = "poly(TEI_BL,2)+poly(TEI_delta,2)+poly(TEI_BL,2):poly(TEI_delta,2)+LogElevation",
-                randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
+                randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)",
+                saveVars = c("Longitude","Latitude"))
 
 cat('Temperature models - combined\n')
 
 m_full <- GLMER(modelData = modelData,responseVar = "occur",
                 fitFamily = "binomial",
                 fixedStruct = "LandUse+poly(TEI_BL,2)+poly(TEI_delta,2)+LandUse:poly(TEI_BL,2)+LandUse:poly(TEI_delta,2)+LandUse:poly(TEI_BL,2):poly(TEI_delta,2)+LogElevation",
-                randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)")
+                randomStruct = "(1|SS)+(1|SSBS)+(1|Taxon_name_entered)",
+                saveVars = c("Longitude","Latitude"))
 
 m_spat <- glmer(formula = occur~LandUse+
                   poly(Longitude,3)+poly(Latitude,3)+
