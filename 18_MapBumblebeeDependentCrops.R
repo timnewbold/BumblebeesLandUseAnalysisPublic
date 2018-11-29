@@ -49,7 +49,7 @@ tiff(filename = paste0(outDir,"ProductionMapFigure.tif"),
 
 par(mar=c(0.2,0.2,0.2,6.5))
 
-plot(yield.map,breaks=brks,col=cols,xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",
+plot(yield.map,breaks=brks,col=cols,xlim=c(-180,40),ylim=c(25,78),xaxt="n",yaxt="n",
      legend=FALSE,box=FALSE,bty="n")
 
 plot(study_region,col="#aaaaaa",border=NA,add=TRUE)
