@@ -1,9 +1,10 @@
 suppressMessages(suppressWarnings(library(RColorBrewer)))
+suppressMessages(suppressWarnings(library(rgdal)))
 
 source("../MapPollinatorDependentCrops/ReadKleinPollinatorData.R")
 source("../MapPollinatorDependentCrops/MapPollinationDependentCropYields.R")
 
-dataDir <- "0_data/"
+dataDir <- "0_data"
 maskDir <- "5_ProjectModelsLandUse/"
 
 outDir <- "18_MapBumblebeeDependentCrops/"
@@ -20,7 +21,7 @@ if (computer == "UCBTTNE-PC2"){
 
 mask <- readRDS(paste(maskDir,"Mask.rds",sep=""))
 
-klein.path <- paste0(dataDir,"data_cleaned.csv")
+klein.path <- paste0(dataDir,"/data_cleaned.csv")
 
 klein.data <- ReadKleinPollinatorData(path = klein.path)
 
@@ -35,20 +36,31 @@ values(prod.map.bumblebees)[values(prod.map.bumblebees)==0] <- NA
 
 values(prod.map.bumblebees)[is.na(values(mask))] <- NA
 
-brks <- c(0,500,1000,2500,5000,10000,25000,50000,100000,200000,500000)
+yield.map <- prod.map.bumblebees/(area(prod.map.bumblebees)*100)
+
+brks <- c(0,5e-5,1e-4,1e-3,5e-3,1e-2,2e-2,5e-2,1e-1,5e-1,2.5)
 cols <- rev(brewer.pal(n = length(brks)-1,name = "RdYlBu"))
+
+un_sub <- readOGR(dsn = dataDir,layer = "UN_subregion",verbose = FALSE)
+study_region <- un_sub[(un_sub$SUBREGION %in% c(39,154,155,21)),]
 
 tiff(filename = paste0(outDir,"ProductionMapFigure.tif"),
      width = 17.5,height = 8,units = "cm",res = 300,compression = "lzw")
 
 par(mar=c(0.2,0.2,0.2,6.5))
 
-plot(prod.map.bumblebees,breaks=brks,col=cols,xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",legend=FALSE)
+plot(yield.map,breaks=brks,col=cols,xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",
+     legend=FALSE,box=FALSE,bty="n")
 
-legend(x = 45,y = 80,title="Production \n(thousand tonnes)",
-       legend = c("< 0.5","0.5 - 1","1 - 2.5","2.5 - 5",
-                  "5 - 10","10 - 25","25 - 50",
-                  "50 - 100","100 - 200","200 - 500"),
+plot(study_region,col="#aaaaaa",border=NA,add=TRUE)
+
+plot(yield.map,breaks=brks,col=cols,xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",
+     legend=FALSE,box=FALSE,bty="n",add=TRUE)
+
+legend(x = 45,y = 80,title="Production \n(kg per ha)",
+       legend = c("< 0.05","0.05 - 0.1","0.1 - 1","1 - 5",
+                  "5 - 10","10 - 20","20 - 50",
+                  "50 - 100","100 - 200","> 500"),
        xpd=TRUE,bty="n",
        fill=cols)
 
