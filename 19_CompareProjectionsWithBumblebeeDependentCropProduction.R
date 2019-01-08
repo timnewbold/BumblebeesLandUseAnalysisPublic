@@ -25,7 +25,7 @@ ylims <- c(0,180)
 png(filename = paste0(
   outDir,"BumblebeeRichnessChangeVersusCropProduction.png"),
   width = 12.5,height = 10,units = "cm",
-  res = 1200)
+  res = 150)
 
 par(las=1)
 par(tck=-0.01)
