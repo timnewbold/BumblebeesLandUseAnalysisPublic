@@ -7,7 +7,7 @@ outDir <- "4_PlotSpeciesLevelModels/"
 load(paste(inDir,"TemperatureModels.rd",sep=""))
 
 xlab <- "Thermal position change"
-ylab <- "Relative occurrence prob. (%)"
+ylab <- "P(occur) difference (%)"
 
 tiff(paste(outDir,"LandUse.tif",sep=""),
     width = 8.5,height = 8.5,units = "cm",res = 300,compression = "lzw")
