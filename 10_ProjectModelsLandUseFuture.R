@@ -127,8 +127,8 @@ invisible(mapply(function(scenario,scenario.label){
   plot(pred_2070_propn,breaks=brks,col=cols,
        xlim=c(-180,40),ylim=c(10,78),xaxt="n",yaxt="n",legend=FALSE)
   
-  text(-160,30,paste("Average\nintactness\n= ",
-                     round(mean(values(pred_2070_propn),na.rm=TRUE)*100,0),"%",sep=""))
+  # text(-160,30,paste("Average\nintactness\n= ",
+  #                    round(mean(values(pred_2070_propn),na.rm=TRUE)*100,0),"%",sep=""))
   
   legend(x = 45,y = 80,
          legend = c("< 50%","50 - 75%","75 - 95%","95 - 97.5%",
