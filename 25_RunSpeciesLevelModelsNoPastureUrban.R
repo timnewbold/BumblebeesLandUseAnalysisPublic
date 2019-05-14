@@ -2,7 +2,7 @@ suppressMessages(suppressWarnings(library(StatisticalModels)))
 
 inDir <- "2_PrepareDiversityData/"
 
-outDir <- "3_RunSpeciesLevelModels/"
+outDir <- "25_RunSpeciesLevelModelsNoPastureUrban/"
 
 load(paste(inDir,"diversity_data.Rd",sep=""))
 
