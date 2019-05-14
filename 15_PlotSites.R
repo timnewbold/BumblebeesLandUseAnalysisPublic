@@ -10,11 +10,18 @@ load(paste0(divDir,"diversity_data.rd"))
 sample_years <- as.integer(sub("-[0-9]{2}-[0-9]{2}","",diversity$Sample_end_latest))
 cat(paste0("Records collected between ",min(sample_years)," and ",max(sample_years)))
 
-sites <- diversity[,c('SSBS','LandUse','Longitude','Latitude')]
+diversity <- diversity[!is.na(diversity$LandUse),]
+diversity <- diversity[!is.na(diversity$TEI_BL),]
+diversity <- diversity[!is.na(diversity$Elevation),]
+
+sites <- diversity[,c('SS','SSBS','LandUse','Longitude','Latitude')]
 
 sites <- unique(sites)
 
-cat(paste0('Total site number: ',nrow(sites)))
+cat(paste0('Total study number:',length(unique(sites$SS)),'\n'))
+
+cat(paste0('Total site number: ',nrow(sites),'\n'))
+
 print(table(sites$LandUse))
 
 un_sub <- readOGR(dsn = dataDir,layer = "UN_subregion",verbose = FALSE)
